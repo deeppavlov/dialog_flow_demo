@@ -1,0 +1,1 @@
+This repository contains examples of bots build using [dff](https://github.com/deeppavlov/dialog_flow_framework).
