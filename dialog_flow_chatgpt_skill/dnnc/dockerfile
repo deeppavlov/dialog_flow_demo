@@ -3,8 +3,10 @@
 FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime as base
 
 RUN apt-get update && apt-get install -y gnupg2
-RUN apt install -y curl
+RUN apt-get install -y curl
 RUN apt-get install -y --allow-unauthenticated wget
+RUN apt-get install -y git
+RUN apt-get install -y unzip
 
 RUN apt-key del 7fa2af80  && \
     rm -f /etc/apt/sources.list.d/cuda*.list && \
@@ -27,18 +29,21 @@ ENV DEV_FILE_PATH ${DEV_FILE_PATH}
 
 WORKDIR /src
 RUN git clone ${DNNC_URL} .
-RUN pip3 install -r /src/requirements.txt
+RUN pip install -r /src/requirements.txt
 COPY ./requirements.txt /src/service_requirements.txt
-RUN pip3 install -r /src/service_requirements.txt
+RUN pip install -r /src/service_requirements.txt
+RUN pip install tensorboard
 
 RUN wget ${ROBERTA_NLI}
 RUN unzip roberta_nli.zip && rm roberta_nli.zip
 
+WORKDIR /src/data/clinc150
 RUN mkdir original_data
-RUN wget ${CLINC_URL} -P ./original_data/
-RUN python3 preprocess.py
+RUN wget ${CLINC_URL} -P original_data/
+RUN python3 ./preprocess.py
 
-RUN python train_dnnc.py \
+WORKDIR /src
+RUN python3 train_dnnc.py \
 --train_file_path ${TRAIN_FILE_PATH} \
 --dev_file_path ${DEV_FILE_PATH} \
 --oos_dev_file_path ./data/clinc150/oos/dev/ \
