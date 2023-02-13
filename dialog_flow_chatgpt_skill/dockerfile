@@ -9,4 +9,4 @@ COPY ./requirements.txt /app/requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY . /app
-CMD ["python3", "run.py"]
+CMD gunicorn --workers=1 server:app -b 0.0.0.0:${SERVICE_PORT} --timeout=1200

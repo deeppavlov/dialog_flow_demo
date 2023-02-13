@@ -42,23 +42,7 @@ RUN mkdir original_data
 RUN wget ${CLINC_URL} -P original_data/
 RUN python3 ./preprocess.py
 
-WORKDIR /src
-RUN python3 train_dnnc.py \
---train_file_path ${TRAIN_FILE_PATH} \
---dev_file_path ${DEV_FILE_PATH} \
---oos_dev_file_path ./data/clinc150/oos/dev/ \
---do_lower_case \
---bert_nli_path ./roberta_nli/ \
---bert_model roberta-base \
---few_shot_num 5 \
---num_trials 1 \
---num_train_epochs 10 \
---learning_rate 2e-5 \
---train_batch_size 400 \
---gradient_accumulation_steps 4 \
---save_model_path saving_checkpoints \
---output_dir ./clinc150_all_dnnc/
-
 FROM base as prod
+WORKDIR /src
 COPY . /src
 CMD gunicorn --workers=1 server:app -b 0.0.0.0:${SERVICE_PORT} --timeout=1200
