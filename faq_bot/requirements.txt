@@ -1,3 +1,2 @@
 dff[telegram, tests] @ git+https://github.com/deeppavlov/dialog_flow_framework.git@merge/telegram
-sentence_transformers
-numpy
+sentence_transformers==2.2.2
