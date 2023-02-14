@@ -1,14 +1,20 @@
+"""
+Bot
+---
+This module defines objects needed to run the bot.
+"""
 import os
 
 from dff.messengers.telegram import PollingTelegramInterface, TelegramMessenger
 from dff.pipeline import Pipeline
 from dff.script.core.context import Context
 
-from .script import script
+from .script.script import script
 from .model import find_similar_questions
 
 
 def question_processor(ctx: Context):
+    """Store questions similar to user's query in the `annotations` field of a message."""
     last_request = ctx.last_request
     if last_request is None:
         return
@@ -26,8 +32,7 @@ def question_processor(ctx: Context):
     ctx.set_last_request(last_request)
 
 
-messenger = TelegramMessenger(os.getenv("TG_BOT_TOKEN", ""))
-interface = PollingTelegramInterface(messenger=messenger)
+interface = PollingTelegramInterface(token=os.getenv("TG_BOT_TOKEN", ""))
 
 
 pipeline = Pipeline.from_script(
@@ -35,5 +40,5 @@ pipeline = Pipeline.from_script(
     start_label=("proxy_flow", "start_node"),
     fallback_label=("proxy_flow", "fallback_node"),
     messenger_interface=interface,
-    pre_services=[question_processor],
+    pre_services=[question_processor],  # pre-services run before bot sends a response
 )
