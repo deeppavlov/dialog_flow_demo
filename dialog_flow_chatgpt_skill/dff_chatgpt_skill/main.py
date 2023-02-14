@@ -12,8 +12,11 @@ script = {
     "general_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(("home", "order")),
+                ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(["shopping_list", 'transfer']),
                 ("chitchat_flow", "init_chitchat", 0.8): cnd.true()
+            },
+            PRE_TRANSITIONS_PROCESSING: {
+                "1": loc_prc.extract_intents()
             }
         },
         "start_node": {
@@ -26,7 +29,10 @@ script = {
     "chitchat_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(("home", "order")),
+                ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(["shopping_list", 'transfer']),
+            },
+            PRE_TRANSITIONS_PROCESSING: {
+                "1": loc_prc.extract_intents()
             }
         },
         "init_chitchat": {
@@ -51,7 +57,7 @@ script = {
     "form_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("chitchat_flow", "init_chitchat", 1.2): cnd.any([loc_cnd.has_intent(("meta", "cancel")), loc_cnd.has_intent(("meta", "no"))]),
+                ("chitchat_flow", "init_chitchat", 1.2): loc_cnd.has_intent(["cancel", "no"]),
             }
         },
         "ask_item": {

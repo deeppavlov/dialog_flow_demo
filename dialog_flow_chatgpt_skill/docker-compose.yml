@@ -11,7 +11,7 @@ services:
         - CUDA_VISIBLE_DEVICES=0
         - FLASK_APP=server
 
-    dnnc-intents:
+    dnnc:
       env_file: [ .env ]
       build:
         args:
@@ -21,8 +21,7 @@ services:
           SERVICE_PORT: 4999
           TRAIN_FILE_PATH: ./data/clinc150/all/train/
           DEV_FILE_PATH: ./data/clinc150/all/dev/
-        context: dnnc/
-        target: dockerfile
+        context: ./dnnc/
       environment:
         - CUDA_VISIBLE_DEVICES=0
         - FLASK_APP=server

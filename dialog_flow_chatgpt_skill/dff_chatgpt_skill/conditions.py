@@ -4,12 +4,12 @@ from dff.script import Context, Actor
 
 from . import utils
 
-def has_intent(label: tuple) -> Callable:
+def has_intent(labels: list) -> Callable:
     def has_intent_inner(ctx: Context, actor: Actor) -> bool:
         if ctx.validation:
             return False
 
-        return label in ctx.misc.get(utils.DNNC_INTENTS, [])
+        return any([label in ctx.misc.get(utils.DNNC_INTENTS, []) for label in labels])
 
     return has_intent_inner
 

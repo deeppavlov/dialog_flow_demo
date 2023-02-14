@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-
 FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime as base
 
 RUN apt-get update && apt-get install -y gnupg2
