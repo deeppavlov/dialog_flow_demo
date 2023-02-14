@@ -1,12 +1,10 @@
-from os import getenv
-
 import pytest
 from dff.utils.testing.common import check_happy_path
-from dff.messengers.telegram import TelegramMessage, TelegramUI, CallbackQuery
+from dff.messengers.telegram import TelegramMessage, TelegramUI
 from dff.script import RESPONSE
 from dff.script.core.message import Button
 
-from bot.script import script
+from bot.script.script import script
 from bot.bot import pipeline
 from bot.model import faq
 
@@ -32,7 +30,7 @@ from bot.model import faq
             ),
             (
                 TelegramMessage(
-                    commands=[CallbackQuery(data='Why would I want to use Arch?')]
+                    callback_query='Why would I want to use Arch?'
                 ),
                 TelegramMessage(
                     text=faq['Why would I want to use Arch?']
@@ -40,7 +38,7 @@ from bot.model import faq
             ),
             (
                 TelegramMessage(
-                    commands=[CallbackQuery(data='Why would I not want to use Arch?')]
+                    callback_query='Why would I not want to use Arch?'
                 ),
                 TelegramMessage(
                     text=faq['Why would I not want to use Arch?']
@@ -61,7 +59,7 @@ from bot.model import faq
             ),
             (
                 TelegramMessage(
-                    commands=[CallbackQuery(data='What is Arch Linux?')]
+                    callback_query='What is Arch Linux?'
                 ),
                 TelegramMessage(
                     text=faq['What is Arch Linux?']
@@ -82,7 +80,7 @@ from bot.model import faq
             ),
             (
                 TelegramMessage(
-                    commands=[CallbackQuery(data='What architectures does Arch support?')]
+                    callback_query='What architectures does Arch support?'
                 ),
                 TelegramMessage(
                     text=faq['What architectures does Arch support?']
