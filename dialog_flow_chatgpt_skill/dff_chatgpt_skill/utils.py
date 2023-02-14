@@ -2,13 +2,20 @@ import os
 from typing import Optional
 
 
+def get_token():
+    token = os.getenv("TG_BOT_TOKEN")
+    if token is None:
+        raise OSError("TG_BOT_TOKEN missing.")
+    return token
+
+
 def get_config(email: Optional[str] = None, password: Optional[str] = None):
     true_email = email or os.getenv("OPENAI_API_LOGIN")
     true_password = password or os.getenv("OPENAI_API_PASSWORD")
     if not true_email:
-        raise OSError("Openai API login missing.")
+        raise OSError("OPENAI_API_LOGIN missing.")
     if not true_password:
-        raise OSError("Openai API password missing.")
+        raise OSError("OPENAI_API_PASSWORD missing.")
     return {
         "email": true_email,
         "password": true_password
