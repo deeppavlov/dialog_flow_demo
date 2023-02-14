@@ -10,7 +10,6 @@ def get_config(email: Optional[str] = None, password: Optional[str] = None):
     if not true_password:
         raise OSError("Openai API password missing.")
     return {
-        "auth_type": "google",
         "email": true_email,
         "password": true_password
     }
@@ -20,7 +19,9 @@ SLOTS = "slots"
 DNNC_INTENTS = "dnnc_intents"
 CHATGPT_OUTPUT = "chatgpt_output"
 CHATGPT_COHERENCE = "chatgpt_coherence"
-DNNC_URL = "http://localhost:4999/respond"
+DNNC_URL = f'http://localhost:{os.getenv("DNNC_PORT", "4999")}/respond'
+
+FALLBACK_RESPONSE = "I'm afraid I cannot elaborate on this subject. If you have any other questions though, feel free to ask them."
 
 CHATGPT_MAIN_PROMPT = """
 "Book Lovers Paradise" is a one-stop destination for all things literary

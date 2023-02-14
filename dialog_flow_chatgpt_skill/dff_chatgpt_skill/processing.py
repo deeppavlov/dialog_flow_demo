@@ -1,18 +1,41 @@
 import re
-
+import requests
 from dff.script import Context, Actor
-from pyChatGPT import ChatGPT
+from revChatGPT.V1 import Chatbot
 from . import utils
 
 CONFIG = utils.get_config()
 
 
+def send_message(bot: Chatbot, message: str) -> str:
+    responses = []
+    for data in bot.ask(
+        message,
+        conversation_id=bot.config.get("conversation"),
+        parent_id=bot.config.get("parent_id")
+    ):
+        responses.append(data["message"])
+    if len(responses) > 0:
+        return responses[-1]
+    return ""
+
+
 def extract_intents():
     def extract_intents_inner(ctx: Context, actor: Actor) -> Context:
-        ctx.misc[utils.DNNC_INTENTS] = []
+        request_body = {"dialog_contexts": [ctx.last_request]}
+        response = requests.post(utils.DNNC_URL, json=request_body)
+        ctx.misc[utils.DNNC_INTENTS] = response.json()[0][0] if response.status_code == 200 else []
         return ctx
 
     return extract_intents_inner
+
+
+def clear_intents():
+    def clear_intents_inner(ctx: Context, actor: Actor) -> Context:
+        ctx.misc[utils.DNNC_INTENTS] = []
+        return ctx
+
+    return clear_intents_inner
 
 
 def generate_response():
@@ -21,12 +44,12 @@ def generate_response():
         if ctx.validation:
             return ctx
 
-        chatgpt_api = ChatGPT(**CONFIG)
+        bot = Chatbot(config=CONFIG)
         text = ctx.last_request.text
-        full_prompt = [utils.CHATGPT_MAIN_PROMPT, text]
-        chatgpt_output = chatgpt_api.send_message(full_prompt).get("message", "")
-        full_coherence_prompt = [utils.CHATGPT_COHERENCE_PROMPT, text, chatgpt_output]
-        coherence_output = chatgpt_api.send_message(full_coherence_prompt).get("message", "")
+        full_prompt = " ".join([utils.CHATGPT_MAIN_PROMPT, text])
+        chatgpt_output = send_message(bot, full_prompt)
+        full_coherence_prompt = " ".join([utils.CHATGPT_COHERENCE_PROMPT, text, chatgpt_output])
+        coherence_output = send_message(bot, full_coherence_prompt)
         ctx.misc[utils.CHATGPT_OUTPUT] = chatgpt_output
         ctx.misc[utils.CHATGPT_COHERENCE] = True if re.search(expression, coherence_output) else False
         return ctx

@@ -3,17 +3,13 @@ services:
       env_file: [ .env ]
       build:
         args:
+          SERVICE_NAME: assistant-bot
           SERVICE_PORT: 5000
         context: .
         target: dockerfile
       environment:
         - CUDA_VISIBLE_DEVICES=0
-    deploy:
-      resources:
-        limits:
-          memory: 8G
-        reservations:
-          memory: 8G
+        - FLASK_APP=server
 
     dnnc-intents:
       env_file: [ .env ]
@@ -27,3 +23,12 @@ services:
           DEV_FILE_PATH: ./data/clinc150/all/dev/
         context: dnnc/
         target: dockerfile
+      environment:
+        - CUDA_VISIBLE_DEVICES=0
+        - FLASK_APP=server
+      deploy:
+        resources:
+          limits:
+            memory: 8G
+          reservations:
+            memory: 8G

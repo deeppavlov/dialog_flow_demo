@@ -13,7 +13,7 @@ script = {
         LOCAL: {
             TRANSITIONS: {
                 ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(("home", "order")),
-                ("chitchat_flow", "chitchat_init", 0.8): cnd.true()
+                ("chitchat_flow", "init_chitchat", 0.8): cnd.true()
             }
         },
         "start_node": {
@@ -27,13 +27,15 @@ script = {
         LOCAL: {
             TRANSITIONS: {
                 ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(("home", "order")),
-                lbl.repeat(0.8): cnd.true()
             }
         },
         "init_chitchat": {
-            RESPONSE: Message(text="Welcome to 'Book Lovers Paradise'! Ask us anything you would like to know."),
+            RESPONSE: Message(text="'Book Lovers Paradise' welcomes you! Ask us anything you would like to know."),
             TRANSITIONS: {
                 ("chitchat_flow", "chitchat"): cnd.true()
+            },
+            PRE_TRANSITIONS_PROCESSING: {
+                "1": loc_prc.clear_intents()
             }
         },
         "chitchat": {
@@ -41,7 +43,7 @@ script = {
                 "1": loc_prc.generate_response()
             },
             TRANSITIONS: {
-                lbl.repeat(): cnd.true()
+                lbl.repeat(0.8): cnd.true()
             },
             RESPONSE: loc_rsp.choose_response
         },
@@ -49,8 +51,7 @@ script = {
     "form_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("chitchat_flow", "chitchat", 1.2): cnd.any([loc_cnd.has_intent(("meta", "cancel")), loc_cnd.has_intent(("meta", "no"))]),
-                lbl.repeat(0.8): cnd.true()
+                ("chitchat_flow", "init_chitchat", 1.2): cnd.any([loc_cnd.has_intent(("meta", "cancel")), loc_cnd.has_intent(("meta", "no"))]),
             }
         },
         "ask_item": {
@@ -59,7 +60,8 @@ script = {
                 "1": loc_prc.extract_item()
             },
             TRANSITIONS: {
-                lbl.forward(): loc_cnd.slots_filled(["items"])
+                ("form_flow", "ask_delivery"): loc_cnd.slots_filled(["items"]),
+                lbl.repeat(0.8): cnd.true()
             }
         },
         "ask_delivery": {
@@ -68,7 +70,8 @@ script = {
                 "1": loc_prc.extract_delivery()
             },
             TRANSITIONS: {
-                lbl.forward(): loc_cnd.slots_filled(["delivery"])
+                ("form_flow", "ask_address"): loc_cnd.slots_filled(["delivery"]),
+                lbl.repeat(0.8): cnd.true()
             }
         },
         "ask_address": {
@@ -77,7 +80,8 @@ script = {
                 "1": loc_prc.extract_address()
             },
             TRANSITIONS: {
-                lbl.forward(): cnd.true()
+                ("form_flow", "ask_payment_method"): cnd.true(),
+                lbl.repeat(0.8): cnd.true()
             }
         },
         "ask_payment_method": {
@@ -86,7 +90,8 @@ script = {
                 "1": loc_prc.extract_payment_method()
             },
             TRANSITIONS: {
-                ("chitchat_flow", "chitchat"): loc_cnd.slots_filled(["payment_method"])
+                ("chitchat_flow", "init_chitchat"): loc_cnd.slots_filled(["payment_method"]),
+                lbl.repeat(0.8): cnd.true()
             }
         }
     }
