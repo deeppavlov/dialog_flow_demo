@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM python:3.10-slim-buster as base
-RUN apt update
-RUN apt install -y git
+RUN apt update & apt install -y git
 
 WORKDIR /app
 
