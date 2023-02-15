@@ -1,10 +1,9 @@
 from dff.pipeline import Pipeline
-from dff.messengers.telegram import PollingTelegramInterface, TelegramMessenger
+from dff.messengers.telegram import PollingTelegramInterface
 from .main import script
 from .utils import get_token
 
-messenger = TelegramMessenger(get_token())
-interface = PollingTelegramInterface(messenger=messenger)
+interface = PollingTelegramInterface(token=get_token())
 
 pipeline = Pipeline.from_script(
     script = script,
