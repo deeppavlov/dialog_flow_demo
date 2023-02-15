@@ -8,10 +8,10 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY bot/ ./bot
-
 # cache mfaq model
-RUN ["python3", "bot/model.py"]
+RUN ["python3", "-c", "from sentence_transformers import SentenceTransformer; _ = SentenceTransformer('clips/mfaq')"]
+
+COPY bot/ ./bot
 
 FROM base as test
 COPY test.py ./
