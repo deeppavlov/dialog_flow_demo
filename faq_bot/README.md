@@ -8,6 +8,10 @@ It displays found questions as buttons. Upon pressing a button, the bot sends an
 
 In order for the bot to work, set the bot token via [.env](.env).
 
+An example of bot usage:
+
+![image](https://user-images.githubusercontent.com/61429541/219064505-20e67950-cb88-4cff-afa5-7ce608e1282c.png)
+
 ## Testing the bot
 ```commandline
 docker build -t telebot-test --target test .
