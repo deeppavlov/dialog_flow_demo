@@ -23,8 +23,11 @@ def send_message(bot: Chatbot, message: str) -> str:
 def extract_intents():
     def extract_intents_inner(ctx: Context, actor: Actor) -> Context:
         request_body = {"dialog_contexts": [ctx.last_request.text]}
-        response = requests.post(utils.DNNC_URL, json=request_body)
-        ctx.misc[utils.DNNC_INTENTS] = response.json()[0][0] if response.status_code == 200 else []
+        try:
+            response = requests.post(utils.DNNC_URL, json=request_body)
+        except Exception:
+            response = None
+        ctx.misc[utils.DNNC_INTENTS] = response.json()[0][0] if response and response.status_code == 200 else []
         return ctx
 
     return extract_intents_inner
