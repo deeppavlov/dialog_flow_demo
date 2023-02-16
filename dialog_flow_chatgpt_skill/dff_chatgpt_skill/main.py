@@ -96,8 +96,14 @@ script = {
                 "1": loc_prc.extract_payment_method()
             },
             TRANSITIONS: {
-                ("chitchat_flow", "init_chitchat"): loc_cnd.slots_filled(["payment_method"]),
+                ("form_flow", "success"): loc_cnd.slots_filled(["payment_method"]),
                 lbl.repeat(0.8): cnd.true()
+            }
+        },
+        "success": {
+            RESPONSE: Message(text="We registred your transaction. Type anything to continue..."),
+            TRANSITIONS: {
+                ("chitchat_flow", "init_chitchat"): cnd.true()
             }
         }
     }
