@@ -15,7 +15,7 @@ services:
       build:
         args:
           ROBERTA_NLI: https://storage.googleapis.com/sfr-dnnc-few-shot-intent/roberta_nli.zip
-          DNNC_URL: https://github.com/salesforce/DNNC-few-shot-intent.git
+          DNNC_URL: https://github.com/ruthenian8/DNNC-few-shot-intent.git
           CLINC_URL: https://raw.githubusercontent.com/clinc/oos-eval/master/data/data_full.json
           SERVICE_PORT: 4999
           TRAIN_FILE_PATH: ./data/clinc150/all/train/
