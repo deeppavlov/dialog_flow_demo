@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy
 from sentence_transformers import SentenceTransformer
 
-model = SentenceTransformer('clips/mfaq')
+model = SentenceTransformer("clips/mfaq")
 
 with open(Path(__file__).parent / "faq.json", "r", encoding="utf-8") as file:
     faq = json.load(file)

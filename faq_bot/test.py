@@ -11,7 +11,7 @@ from bot.model import faq
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "scenario",
+    "happy_path",
     [
         (
             (TelegramMessage(text="/start"), script["proxy_flow"]["welcome_node"][RESPONSE]),
@@ -21,73 +21,41 @@ from bot.model import faq
                     text="I found similar questions in my database:",
                     ui=TelegramUI(
                         buttons=[
-                            Button(text=q, payload=q) for q in [
-                                'Why would I want to use Arch?', 'Why would I not want to use Arch?'
-                            ]
+                            Button(text=q, payload=q)
+                            for q in ["Why would I want to use Arch?", "Why would I not want to use Arch?"]
                         ]
-                    )
-                )
+                    ),
+                ),
             ),
             (
-                TelegramMessage(
-                    callback_query='Why would I want to use Arch?'
-                ),
-                TelegramMessage(
-                    text=faq['Why would I want to use Arch?']
-                )
+                TelegramMessage(callback_query="Why would I want to use Arch?"),
+                TelegramMessage(text=faq["Why would I want to use Arch?"]),
             ),
             (
-                TelegramMessage(
-                    callback_query='Why would I not want to use Arch?'
-                ),
-                TelegramMessage(
-                    text=faq['Why would I not want to use Arch?']
-                )
+                TelegramMessage(callback_query="Why would I not want to use Arch?"),
+                TelegramMessage(text=faq["Why would I not want to use Arch?"]),
             ),
             (
-                TelegramMessage(
-                    text="What is arch linux?"
-                ),
+                TelegramMessage(text="What is arch linux?"),
                 TelegramMessage(
                     text="I found similar questions in my database:",
-                    ui=TelegramUI(
-                        buttons=[
-                            Button(text=q, payload=q) for q in ['What is Arch Linux?']
-                        ]
-                    )
-                )
-            ),
-            (
-                TelegramMessage(
-                    callback_query='What is Arch Linux?'
+                    ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in ["What is Arch Linux?"]]),
                 ),
-                TelegramMessage(
-                    text=faq['What is Arch Linux?']
-                )
             ),
+            (TelegramMessage(callback_query="What is Arch Linux?"), TelegramMessage(text=faq["What is Arch Linux?"])),
             (
-                TelegramMessage(
-                    text="where am I?"
-                ),
+                TelegramMessage(text="where am I?"),
                 TelegramMessage(
                     text="I don't have an answer to that question. Here's a list of questions I know an answer to:",
-                    ui=TelegramUI(
-                        buttons=[
-                            Button(text=q, payload=q) for q in faq
-                        ]
-                    )
-                )
+                    ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in faq]),
+                ),
             ),
             (
-                TelegramMessage(
-                    callback_query='What architectures does Arch support?'
-                ),
-                TelegramMessage(
-                    text=faq['What architectures does Arch support?']
-                )
-            )
+                TelegramMessage(callback_query="What architectures does Arch support?"),
+                TelegramMessage(text=faq["What architectures does Arch support?"]),
+            ),
         )
-    ]
+    ],
 )
-async def test_scenario(scenario):
-    check_happy_path(pipeline=pipeline, happy_path=scenario)
+async def test_happy_path(happy_path):
+    check_happy_path(pipeline=pipeline, happy_path=happy_path)

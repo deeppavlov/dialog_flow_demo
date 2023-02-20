@@ -1,7 +1,7 @@
 """
-Transitions
+Conditions
 -----------
-This module defines transitions between nodes and conditions of those transitions.
+This module defines conditions for transitions between nodes.
 """
 from typing import cast
 
@@ -23,9 +23,3 @@ def received_button_click(ctx: Context, _: Actor):
     last_request = cast(TelegramMessage, ctx.last_request)
 
     return last_request.callback_query is not None
-
-
-qa_transitions = {
-    ("qa_flow", "suggest_questions"): received_text,
-    ("qa_flow", "answer_question"): received_button_click,
-}

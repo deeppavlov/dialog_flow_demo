@@ -27,20 +27,12 @@ def suggest_similar_questions(ctx: Context, _: Actor):
     if len(similar_questions) == 0:  # question is not similar to any questions
         return TelegramMessage(
             text="I don't have an answer to that question. Here's a list of questions I know an answer to:",
-            ui=TelegramUI(
-                buttons=[
-                    Button(text=q, payload=q) for q in faq
-                ]
-            )
+            ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in faq]),
         )
     else:
         return TelegramMessage(
             text="I found similar questions in my database:",
-            ui=TelegramUI(
-                buttons=[
-                    Button(text=q, payload=q) for q in similar_questions
-                ]
-            )
+            ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in similar_questions]),
         )
 
 

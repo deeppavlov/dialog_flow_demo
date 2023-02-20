@@ -8,27 +8,27 @@ import dff.script.conditions as cnd
 from dff.messengers.telegram import TelegramMessage
 
 from .responses import answer_question, suggest_similar_questions
-from .transitions import qa_transitions
+from .conditions import received_button_click, received_text
 
+qa_transitions = {
+    ("qa_flow", "suggest_questions"): received_text,
+    ("qa_flow", "answer_question"): received_button_click,
+}
 
 script = {
     "proxy_flow": {
         "start_node": {
             RESPONSE: TelegramMessage(),
-            TRANSITIONS: {
-                "welcome_node": cnd.exact_match(TelegramMessage(text="/start"))
-            }
+            TRANSITIONS: {"welcome_node": cnd.exact_match(TelegramMessage(text="/start"))},
         },
         "welcome_node": {
             RESPONSE: TelegramMessage(text="Welcome! Ask me questions about Arch Linux."),
-            TRANSITIONS: qa_transitions
+            TRANSITIONS: qa_transitions,
         },
         "fallback_node": {
             RESPONSE: TelegramMessage(text="Something went wrong. Use `/restart` to start over."),
-            TRANSITIONS: {
-                "welcome_node": cnd.exact_match(TelegramMessage(text="/restart"))
-            }
-        }
+            TRANSITIONS: {"welcome_node": cnd.exact_match(TelegramMessage(text="/restart"))},
+        },
     },
     "qa_flow": {
         LOCAL: {
@@ -39,6 +39,6 @@ script = {
         },
         "answer_question": {
             RESPONSE: answer_question,
-        }
+        },
     },
 }
