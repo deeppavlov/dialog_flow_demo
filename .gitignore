@@ -1,4 +1,4 @@
-
+faq_bot/.env
 *.DS_Store*
 *.egg-info/
 dist/
@@ -9,13 +9,8 @@ build/
 .idea/*
 *.pyc
 .pytest_cache/*
+.mypy_cache
 modules/*
-dm_pickle*
-dialogue_manager*
-GlobalUserTableAccessor*
-memory_debugging*
-opening_database*
-_globals.py
 venv*
 .vscode
 .coverage
