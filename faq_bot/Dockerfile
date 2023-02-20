@@ -14,7 +14,7 @@ COPY bot/ ./bot
 
 FROM base as test
 COPY test.py ./
-# RUN ["pytest", "test.py"]
+RUN ["pytest", "test.py"]
 
 FROM base as prod
 COPY run.py ./
