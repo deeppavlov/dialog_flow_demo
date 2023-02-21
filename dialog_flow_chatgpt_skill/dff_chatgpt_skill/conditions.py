@@ -10,6 +10,7 @@ from dff.script import Context, Actor
 from . import utils
 
 
+
 def has_intent(labels: list) -> Callable:
     """
     Check if any of the given intents are in the context.
