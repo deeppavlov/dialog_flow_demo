@@ -8,6 +8,9 @@ CONFIG = utils.get_config()
 
 
 def send_message(bot: Chatbot, message: str) -> str:
+    """
+    Make a request to ChatGPR API.
+    """
     responses = []
     for data in bot.ask(
         message,
@@ -21,19 +24,25 @@ def send_message(bot: Chatbot, message: str) -> str:
 
 
 def extract_intents():
+    """
+    Extract intents from dnnc response.
+    """
     def extract_intents_inner(ctx: Context, actor: Actor) -> Context:
         request_body = {"dialog_contexts": [ctx.last_request.text]}
         try:
             response = requests.post(utils.DNNC_URL, json=request_body)
         except Exception:
             response = None
-        ctx.misc[utils.DNNC_INTENTS] = response.json()[0][0] if response and response.status_code == 200 else []
+        ctx.misc[utils.DNNC_INTENTS] = [response.json()[0][0]] if response and response.status_code == 200 else []
         return ctx
 
     return extract_intents_inner
 
 
 def clear_intents():
+    """
+    Clear intents container.
+    """
     def clear_intents_inner(ctx: Context, actor: Actor) -> Context:
         ctx.misc[utils.DNNC_INTENTS] = []
         return ctx
@@ -42,6 +51,9 @@ def clear_intents():
 
 
 def generate_response():
+    """
+    Store ChatGPT output and ChatGPT coherence measure in the context.
+    """
     expression = re.compile(r"true", re.IGNORECASE)
     def generate_response_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:
@@ -61,6 +73,9 @@ def generate_response():
 
 
 def extract_item():
+    """
+    Extract item slot.
+    """
     expression = re.compile(r".+")
     def extract_item_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:
@@ -77,6 +92,7 @@ def extract_item():
 
 
 def extract_payment_method():
+    """Extract payment method slot."""
     expression = re.compile(r"(card|cash)")
     def extract_payment_method_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:
@@ -92,6 +108,9 @@ def extract_payment_method():
 
 
 def extract_delivery():
+    """
+    Extract delivery slot.
+    """
     expression = re.compile(r"(pickup|home)")
     def extract_delivery_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:
@@ -107,6 +126,9 @@ def extract_delivery():
 
 
 def extract_address():
+    """
+    Extract address slot.
+    """
     expression = re.compile(r".+")
     def extract_address_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:

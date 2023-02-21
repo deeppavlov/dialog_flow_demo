@@ -3,6 +3,9 @@ from typing import Optional
 
 
 def get_token():
+    """
+    Raise error on missing token.
+    """
     token = os.getenv("TG_BOT_TOKEN")
     if token is None:
         raise OSError("TG_BOT_TOKEN missing.")
@@ -10,6 +13,9 @@ def get_token():
 
 
 def get_config(email: Optional[str] = None, password: Optional[str] = None):
+    """
+    Raise error on missing ChatGPT config.
+    """
     true_email = email or os.getenv("OPENAI_API_LOGIN")
     true_password = password or os.getenv("OPENAI_API_PASSWORD")
     if not true_email:
