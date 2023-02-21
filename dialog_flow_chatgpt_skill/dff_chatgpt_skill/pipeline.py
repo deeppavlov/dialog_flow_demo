@@ -18,7 +18,7 @@ def debug_service(ctx):
 
 
 pipeline = Pipeline.from_script(
-    script = script,
+    script=script,
     pre_services=[debug_service],
     post_services=[debug_service],
     start_label=("general_flow", "start_node"),

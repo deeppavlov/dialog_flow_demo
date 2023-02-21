@@ -34,7 +34,9 @@ try:
         no_cuda = False
     else:
         no_cuda = True
-    dnnc = DNNC(MODEL_PATH, Namespace(**{"no_cuda": no_cuda, "bert_model": "roberta-base", "max_seq_length": MAX_SEQ_LENGTH}))
+    dnnc = DNNC(
+        MODEL_PATH, Namespace(**{"no_cuda": no_cuda, "bert_model": "roberta-base", "max_seq_length": MAX_SEQ_LENGTH})
+    )
     intent_predictor = DnncIntentPredictor(dnnc, sampled_tasks[0])
     logger.info("predictor is ready")
 except Exception as e:

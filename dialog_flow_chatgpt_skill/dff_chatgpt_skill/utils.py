@@ -22,10 +22,7 @@ def get_config(email: Optional[str] = None, password: Optional[str] = None):
         raise OSError("OPENAI_API_LOGIN missing.")
     if not true_password:
         raise OSError("OPENAI_API_PASSWORD missing.")
-    return {
-        "email": true_email,
-        "password": true_password
-    }
+    return {"email": true_email, "password": true_password}
 
 
 SLOTS = "slots"
@@ -34,7 +31,9 @@ CHATGPT_OUTPUT = "chatgpt_output"
 CHATGPT_COHERENCE = "chatgpt_coherence"
 DNNC_URL = f'http://localhost:{os.getenv("DNNC_PORT", "4999")}/respond'
 
-FALLBACK_RESPONSE = "I'm afraid I cannot elaborate on this subject. If you have any other questions though, feel free to ask them."
+FALLBACK_RESPONSE = (
+    "I'm afraid I cannot elaborate on this subject. If you have any other questions though, feel free to ask them."
+)
 
 CHATGPT_MAIN_PROMPT = """
 "Book Lovers Paradise" is a one-stop destination for all things literary
