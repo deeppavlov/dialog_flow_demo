@@ -1,6 +1,7 @@
 import logging
 import time
 import os
+import random
 from argparse import Namespace
 
 import torch
@@ -16,6 +17,8 @@ sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"), integrations=[FlaskIntegration()])
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+random.seed(42)
 
 DEFAULT_CONFIDENCE = 0.9
 ZERO_CONFIDENCE = 0.0
@@ -64,5 +67,5 @@ def respond():
         confidences = [ZERO_CONFIDENCE] * len(contexts)
 
     total_time = time.time() - st_time
-    logger.info(f"Keywords storyGPT exec time: {total_time:.3f}s")
+    logger.info(f"Dnnc exec time: {total_time:.3f}s")
     return jsonify(list(zip(responses, confidences)))

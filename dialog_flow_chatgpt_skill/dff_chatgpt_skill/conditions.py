@@ -1,3 +1,8 @@
+"""
+Conditions
+-----------
+This module defines transition conditions.
+"""
 from typing import Callable
 
 from dff.script import Context, Actor
