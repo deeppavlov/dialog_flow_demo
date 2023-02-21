@@ -9,6 +9,8 @@ services:
       environment:
         - CUDA_VISIBLE_DEVICES=0
         - FLASK_APP=server
+      volumes:
+        - .:/app
 
     dnnc:
       env_file: [ .env ]
