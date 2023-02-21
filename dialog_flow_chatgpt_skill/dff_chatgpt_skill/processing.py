@@ -50,6 +50,17 @@ def clear_intents():
     return clear_intents_inner
 
 
+def clear_slots():
+    """
+    Clear slots container.
+    """
+    def clear_slots_inner(ctx: Context, actor: Actor) -> Context:
+        ctx.misc[utils.SLOTS] = {}
+        return ctx
+    
+    return clear_slots_inner
+
+
 def generate_response():
     """
     Store ChatGPT output and ChatGPT coherence measure in the context.
@@ -93,7 +104,7 @@ def extract_item():
 
 def extract_payment_method():
     """Extract payment method slot."""
-    expression = re.compile(r"(card|cash)")
+    expression = re.compile(r"(card|cash)", re.IGNORECASE)
     def extract_payment_method_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:
             return ctx
@@ -111,7 +122,7 @@ def extract_delivery():
     """
     Extract delivery slot.
     """
-    expression = re.compile(r"(pickup|home)")
+    expression = re.compile(r"(pickup|deliver)", re.IGNORECASE)
     def extract_delivery_inner(ctx: Context, actor: Actor) -> Context:
         if ctx.validation:
             return ctx

@@ -49,10 +49,11 @@ script = {
         "init_chitchat": {
             RESPONSE: Message(text="'Book Lovers Paradise' welcomes you! Ask us anything you would like to know."),
             TRANSITIONS: {
-                ("chitchat_flow", "chitchat"): cnd.true()
+                ("chitchat_flow", "chitchat", 0.8): cnd.true()
             },
             PRE_TRANSITIONS_PROCESSING: {
-                "1": loc_prc.clear_intents()
+                "1": loc_prc.clear_intents(),
+                "2": loc_prc.clear_slots()
             }
         },
         "chitchat": {
@@ -68,7 +69,7 @@ script = {
     "form_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("chitchat_flow", "init_chitchat", 1.2): loc_cnd.has_intent(["cancel", "no"]),
+                ("chitchat_flow", "init_chitchat", 1.2): cnd.any([cnd.regexp(r"\bcancel\b|\babort\b"), loc_cnd.has_intent(["cancel", "no"])]),
             }
         },
         "ask_item": {
