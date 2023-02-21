@@ -21,7 +21,7 @@ def send_message(bot: Chatbot, message: str) -> str:
 
 def extract_intents():
     """
-    Extract intents from dnnc response.
+    Extract intents from DNNC response.
     """
 
     def extract_intents_inner(ctx: Context, actor: Actor) -> Context:
