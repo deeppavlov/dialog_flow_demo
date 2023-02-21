@@ -17,7 +17,10 @@ script = {
     "general_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(["shopping_list", 'transfer']),
+                ("form_flow", "ask_item", 1.0): cnd.any([
+                    loc_cnd.has_intent(["shopping_list", 'transfer']),
+                    cnd.regexp(r"\border\b|\bpurchase\b")
+                ]),
                 ("chitchat_flow", "init_chitchat", 0.8): cnd.true()
             },
             PRE_TRANSITIONS_PROCESSING: {
@@ -34,7 +37,10 @@ script = {
     "chitchat_flow": {
         LOCAL: {
             TRANSITIONS: {
-                ("form_flow", "ask_item", 1.0): loc_cnd.has_intent(["shopping_list", 'transfer']),
+                ("form_flow", "ask_item", 1.0): cnd.any([
+                    loc_cnd.has_intent(["shopping_list", 'transfer']),
+                    cnd.regexp(r"\border\b|\bpurchase\b")
+                ]),
             },
             PRE_TRANSITIONS_PROCESSING: {
                 "1": loc_prc.extract_intents()
