@@ -9,7 +9,7 @@ CONFIG = utils.get_config()
 
 def send_message(bot: Chatbot, message: str) -> str:
     """
-    Make a request to ChatGPR API.
+    Make a request to ChatGPT API.
     """
     responses = []
     for data in bot.ask(message, conversation_id=bot.config.get("conversation"), parent_id=bot.config.get("parent_id")):
