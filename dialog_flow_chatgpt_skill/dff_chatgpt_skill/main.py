@@ -28,7 +28,7 @@ script = {
             RESPONSE: Message(text=""),
         },
         "fallback_node": {
-            RESPONSE: Message(text="Cannot recognize your query. Type ok to continue."),
+            RESPONSE: Message(text="Cannot recognize your query. Type 'ok' to continue."),
         },
     },
     "chitchat_flow": {
