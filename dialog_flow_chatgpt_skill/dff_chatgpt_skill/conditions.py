@@ -10,13 +10,12 @@ from dff.script import Context, Actor
 from . import utils
 
 
-
 def has_intent(labels: list) -> Callable:
     """
     Check if any of the given intents are in the context.
     """
 
-    def has_intent_inner(ctx: Context, actor: Actor) -> bool:
+    def has_intent_inner(ctx: Context, _: Actor) -> bool:
         if ctx.validation:
             return False
 
@@ -30,7 +29,7 @@ def slots_filled(slots: list) -> Callable:
     Check if any of the given slots are filled.
     """
 
-    def slots_filled_inner(ctx: Context, actor: Actor) -> bool:
+    def slots_filled_inner(ctx: Context, _: Actor) -> bool:
         if ctx.validation:
             return False
 

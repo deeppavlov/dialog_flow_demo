@@ -24,7 +24,7 @@ def extract_intents():
     Extract intents from DNNC response.
     """
 
-    def extract_intents_inner(ctx: Context, actor: Actor) -> Context:
+    def extract_intents_inner(ctx: Context, _: Actor) -> Context:
         request_body = {"dialog_contexts": [ctx.last_request.text]}
         try:
             response = requests.post(utils.DNNC_URL, json=request_body)
@@ -41,7 +41,7 @@ def clear_intents():
     Clear intents container.
     """
 
-    def clear_intents_inner(ctx: Context, actor: Actor) -> Context:
+    def clear_intents_inner(ctx: Context, _: Actor) -> Context:
         ctx.misc[utils.DNNC_INTENTS] = []
         return ctx
 
@@ -53,7 +53,7 @@ def clear_slots():
     Clear slots container.
     """
 
-    def clear_slots_inner(ctx: Context, actor: Actor) -> Context:
+    def clear_slots_inner(ctx: Context, _: Actor) -> Context:
         ctx.misc[utils.SLOTS] = {}
         return ctx
 
@@ -66,7 +66,7 @@ def generate_response():
     """
     expression = re.compile(r"true", re.IGNORECASE)
 
-    def generate_response_inner(ctx: Context, actor: Actor) -> Context:
+    def generate_response_inner(ctx: Context, _: Actor) -> Context:
         if ctx.validation:
             return ctx
 
@@ -89,7 +89,7 @@ def extract_item():
     """
     expression = re.compile(r".+")
 
-    def extract_item_inner(ctx: Context, actor: Actor) -> Context:
+    def extract_item_inner(ctx: Context, _: Actor) -> Context:
         if ctx.validation:
             return ctx
 
@@ -107,7 +107,7 @@ def extract_payment_method():
     """Extract payment method slot."""
     expression = re.compile(r"(card|cash)", re.IGNORECASE)
 
-    def extract_payment_method_inner(ctx: Context, actor: Actor) -> Context:
+    def extract_payment_method_inner(ctx: Context, _: Actor) -> Context:
         if ctx.validation:
             return ctx
 
@@ -126,7 +126,7 @@ def extract_delivery():
     """
     expression = re.compile(r"(pickup|deliver)", re.IGNORECASE)
 
-    def extract_delivery_inner(ctx: Context, actor: Actor) -> Context:
+    def extract_delivery_inner(ctx: Context, _: Actor) -> Context:
         if ctx.validation:
             return ctx
 
@@ -145,7 +145,7 @@ def extract_address():
     """
     expression = re.compile(r".+")
 
-    def extract_address_inner(ctx: Context, actor: Actor) -> Context:
+    def extract_address_inner(ctx: Context, _: Actor) -> Context:
         if ctx.validation:
             return ctx
 

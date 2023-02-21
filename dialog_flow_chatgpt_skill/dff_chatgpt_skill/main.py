@@ -47,7 +47,7 @@ script = {
         },
         "chitchat": {
             PRE_RESPONSE_PROCESSING: {"1": loc_prc.generate_response()},
-            TRANSITIONS: {lbl.repeat(0.8): cnd.true()},
+            TRANSITIONS: {lbl.repeat(0.8): cnd.true()},  # repeat unless conditions for moving forward are met
             RESPONSE: loc_rsp.choose_response,
         },
     },
@@ -70,23 +70,16 @@ script = {
             ),
             PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.extract_delivery()},
             TRANSITIONS: {
-                ("form_flow", "ask_address"): loc_cnd.slots_filled(["delivery"]),
-                lbl.repeat(0.8): cnd.true(),
+                ("form_flow", "ask_payment_method"): loc_cnd.slots_filled(["delivery"]),
+                lbl.repeat(0.8): cnd.true(),  # repeat unless conditions for moving forward are met
             },
-        },
-        "ask_address": {
-            RESPONSE: Message(
-                text="Please, enter your address. If you chose pickup as delivery method, please, ignore."
-            ),
-            PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.extract_address()},
-            TRANSITIONS: {("form_flow", "ask_payment_method"): cnd.true(), lbl.repeat(0.8): cnd.true()},
         },
         "ask_payment_method": {
             RESPONSE: Message(text="Please, enter the payment method you would like to use: cash or credit card."),
             PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.extract_payment_method()},
             TRANSITIONS: {
                 ("form_flow", "success"): loc_cnd.slots_filled(["payment_method"]),
-                lbl.repeat(0.8): cnd.true(),
+                lbl.repeat(0.8): cnd.true(),  # repeat unless conditions for moving forward are met
             },
         },
         "success": {
