@@ -38,12 +38,12 @@ script = {
                     [loc_cnd.has_intent(["shopping_list", "transfer"]), cnd.regexp(r"\border\b|\bpurchase\b")]
                 ),
             },
-            PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.extract_intents()},
+            PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.clear_intents(), "2": loc_prc.extract_intents()},
         },
         "init_chitchat": {
             RESPONSE: Message(text="'Book Lovers Paradise' welcomes you! Ask us anything you would like to know."),
             TRANSITIONS: {("chitchat_flow", "chitchat", 0.8): cnd.true()},
-            PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.clear_intents(), "2": loc_prc.clear_slots()},
+            PRE_TRANSITIONS_PROCESSING: {"2": loc_prc.clear_slots()},
         },
         "chitchat": {
             PRE_RESPONSE_PROCESSING: {"1": loc_prc.generate_response()},
@@ -60,7 +60,9 @@ script = {
             }
         },
         "ask_item": {
-            RESPONSE: Message(text="Which books would you like to order? Please, separate the titles by commas."),
+            RESPONSE: Message(
+                text="Which books would you like to order? Please, separate the titles by commas (type 'abort' to cancel)."
+            ),
             PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.extract_item()},
             TRANSITIONS: {("form_flow", "ask_delivery"): loc_cnd.slots_filled(["items"]), lbl.repeat(0.8): cnd.true()},
         },
@@ -83,7 +85,7 @@ script = {
             },
         },
         "success": {
-            RESPONSE: Message(text="We registred your transaction. Type anything to continue..."),
+            RESPONSE: loc_rsp.confirm,
             TRANSITIONS: {("chitchat_flow", "init_chitchat"): cnd.true()},
         },
     },

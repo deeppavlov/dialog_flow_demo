@@ -1,7 +1,7 @@
 import pytest
 from dff.utils.testing.common import check_happy_path
 from dff.messengers.telegram import TelegramMessage
-from dff.script import RESPONSE
+from dff.script import RESPONSE, Message
 
 from dff_chatgpt_skill.main import script
 from dff_chatgpt_skill.pipeline import pipeline
@@ -29,7 +29,12 @@ from dff_chatgpt_skill.pipeline import pipeline
                 script["form_flow"]["ask_payment_method"][RESPONSE],
             ),
             (TelegramMessage(text="foo bar baz"), script["form_flow"]["ask_payment_method"][RESPONSE]),
-            (TelegramMessage(text="card"), script["form_flow"]["success"][RESPONSE]),
+            (
+                TelegramMessage(text="card"),
+                Message(
+                    text="We registered your transaction. Requested titles are: 'Pale Fire', 'Lolita'. Type anything to continue..."
+                ),
+            ),
             (TelegramMessage(text="ok"), script["chitchat_flow"]["init_chitchat"][RESPONSE]),
         )
     ],

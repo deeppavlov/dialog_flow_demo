@@ -12,6 +12,7 @@ RUN apt-get update && \
     curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb \
     -o cuda-keyring_1.0-1_all.deb && \
     dpkg -i cuda-keyring_1.0-1_all.deb
+    # update cuda keyring (https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/)
 
 ARG SERVICE_PORT
 ENV SERVICE_PORT ${SERVICE_PORT}

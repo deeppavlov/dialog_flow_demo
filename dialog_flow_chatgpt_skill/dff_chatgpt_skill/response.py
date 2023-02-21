@@ -13,3 +13,11 @@ def choose_response(ctx: Context, _: Actor) -> Message:
     coherence = ctx.misc[utils.CHATGPT_COHERENCE]
     response = ctx.misc[utils.CHATGPT_OUTPUT]
     return Message(text=(response if coherence else utils.FALLBACK_RESPONSE))
+
+
+def confirm(ctx: Context, _: Actor) -> Message:
+    if ctx.validation:
+        return Message()
+    msg = Message(text="We registered your transaction. Requested titles are: {}. Type anything to continue...")
+    msg.text = msg.text.format(", ".join(ctx.misc[utils.SLOTS]["items"]))
+    return msg
