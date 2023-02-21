@@ -28,7 +28,7 @@ def extract_intents():
         request_body = {"dialog_contexts": [ctx.last_request.text]}
         try:
             response = requests.post(utils.DNNC_URL, json=request_body)
-        except Exception:
+        except requests.RequestException:
             response = None
         ctx.misc[utils.DNNC_INTENTS] = [response.json()[0][0]] if response and response.status_code == 200 else []
         return ctx
