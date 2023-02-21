@@ -3,6 +3,7 @@ from dff.script import Context, Actor, Message
 from . import utils
 
 
+
 def choose_response(ctx: Context, actor: Actor) -> Message:
     """
     Return ChatGPT response if it is coherent, fall back to
