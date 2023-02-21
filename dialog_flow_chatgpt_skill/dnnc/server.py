@@ -28,7 +28,7 @@ DEV_FILE_PATH = os.getenv("DEV_FILE_PATH")
 MODEL_PATH = "roberta_nli"
 
 try:
-    train_examples, dev_examples = load_intent_datasets(TRAIN_FILE_PATH, DEV_FILE_PATH, True)
+    train_examples, _ = load_intent_datasets(TRAIN_FILE_PATH, DEV_FILE_PATH, True)
     sampled_tasks = [sample(5, train_examples)]
     if torch.cuda.is_available():
         no_cuda = False
