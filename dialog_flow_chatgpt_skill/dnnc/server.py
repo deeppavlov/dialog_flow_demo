@@ -50,6 +50,21 @@ logging.getLogger("werkzeug").setLevel("WARNING")
 
 @app.route("/respond", methods=["POST"])
 def respond():
+    """
+    The API expects a json object with the dialog history passed as an array and labeled 'dialog_contexts'. 
+    Intents will be extracted from the last utterance.
+
+    .. code-block:: python
+        {
+            "dialog_contexts": ["phrase_1", "phrase_2"]
+        }
+
+    The API responds with a nested array containing 'label - score' pairs.
+
+    .. code-block:: python
+        [["definition",0.3393537402153015]]
+
+    """
     st_time = time.time()
     contexts = request.json.get("dialog_contexts", [])
 
