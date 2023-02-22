@@ -13,7 +13,7 @@ In order for the bot to work, override the stubs in the environment file: [.env]
 
 DNNC model is available at port 4999. 
 
-Users can interact with the container via '/respond' endpoint.
+Service bot interacts with the container via '/respond' endpoint.
 The API expects a json object with the dialog history passed as an array and labeled 'dialog_contexts'. Intents will be extracted from the last utterance.
 
 ```json
