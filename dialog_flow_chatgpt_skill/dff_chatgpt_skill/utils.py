@@ -20,12 +20,12 @@ def get_config(email: Optional[str] = None, password: Optional[str] = None, acce
     true_email = email or os.getenv("OPENAI_API_LOGIN")
     true_password = password or os.getenv("OPENAI_API_PASSWORD")
     if true_access_token:
-        return {"access_token": true_access_token}
+        return {"access_token": true_access_token, "paid": False}
     if not true_email:
         raise OSError("OPENAI_API_LOGIN missing.")
     if not true_password:
         raise OSError("OPENAI_API_PASSWORD missing.")
-    return {"email": true_email, "password": true_password}
+    return {"email": true_email, "password": true_password, "paid": False}
 
 
 SLOTS = "slots"
