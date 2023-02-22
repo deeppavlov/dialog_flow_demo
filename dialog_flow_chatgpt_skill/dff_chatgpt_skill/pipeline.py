@@ -14,7 +14,7 @@ interface = PollingTelegramInterface(token=get_token())
 
 
 def debug_service(ctx):
-    logging.debug(ctx.json())
+    logging.debug(ctx.dict())
 
 
 pipeline = Pipeline.from_script(

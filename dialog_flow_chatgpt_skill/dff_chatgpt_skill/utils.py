@@ -12,12 +12,15 @@ def get_token():
     return token
 
 
-def get_config(email: Optional[str] = None, password: Optional[str] = None):
+def get_config(email: Optional[str] = None, password: Optional[str] = None, access_token: Optional[str] = None):
     """
     Raise error on missing ChatGPT config.
     """
+    true_access_token = access_token or os.getenv("OPENAI_API_TOKEN")
     true_email = email or os.getenv("OPENAI_API_LOGIN")
     true_password = password or os.getenv("OPENAI_API_PASSWORD")
+    if true_access_token:
+        return {"access_token": true_access_token}
     if not true_email:
         raise OSError("OPENAI_API_LOGIN missing.")
     if not true_password:
