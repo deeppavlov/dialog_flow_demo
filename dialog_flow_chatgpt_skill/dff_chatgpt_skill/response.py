@@ -18,9 +18,12 @@ def choose_response(ctx: Context, _: Actor) -> Message:
 def confirm(ctx: Context, _: Actor) -> Message:
     if ctx.validation:
         return Message()
-msg = Message(
-        text="We registered your transaction. Requested titles are: {}. Type anything to continue...".format(
-            ", ".join(ctx.misc[utils.SLOTS]["items"])
-        )
+    msg_text = (
+        "We registered your transaction. "
+        + f"Requested titles are: {', '.join(ctx.misc[utils.SLOTS]['items'])}. "
+        + f"Delivery method: {ctx.misc[utils.SLOTS]['delivery']}. "
+        + f"Payment method: {ctx.misc[utils.SLOTS]['payment_method']}. "
+        + "Type `abort` to cancel, type `ok` to continue."
     )
+    msg = Message(text=msg_text)
     return msg

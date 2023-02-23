@@ -51,7 +51,7 @@ logging.getLogger("werkzeug").setLevel("WARNING")
 @app.route("/respond", methods=["POST"])
 def respond():
     """
-    The API expects a json object with the dialog history passed as an array and labeled 'dialog_contexts'. 
+    The API expects a json object with the dialog history passed as an array and labeled 'dialog_contexts'.
     Intents will be extracted from the last utterance.
 
     .. code-block:: python

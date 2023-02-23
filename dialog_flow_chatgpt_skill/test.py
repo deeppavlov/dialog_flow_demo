@@ -32,7 +32,7 @@ from dff_chatgpt_skill.pipeline import pipeline
             (
                 TelegramMessage(text="card"),
                 Message(
-                    text="We registered your transaction. Requested titles are: 'Pale Fire', 'Lolita'. Type anything to continue..."
+                    text="We registered your transaction. Requested titles are: 'Pale Fire', 'Lolita'. Delivery method: deliver. Payment method: card. Type `abort` to cancel, type `ok` to continue."
                 ),
             ),
             (TelegramMessage(text="ok"), script["chitchat_flow"]["init_chitchat"][RESPONSE]),

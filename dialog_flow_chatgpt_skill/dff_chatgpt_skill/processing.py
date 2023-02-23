@@ -137,22 +137,3 @@ def extract_delivery():
         return ctx
 
     return extract_delivery_inner
-
-
-def extract_address():
-    """
-    Extract address slot.
-    """
-    expression = re.compile(r".+")
-
-    def extract_address_inner(ctx: Context, _: Actor) -> Context:
-        if ctx.validation:
-            return ctx
-
-        text: str = ctx.last_request.text
-        search = re.search(expression, text)
-        if search is not None:
-            ctx.misc[utils.SLOTS]["address"] = search.group()
-        return ctx
-
-    return extract_address_inner
