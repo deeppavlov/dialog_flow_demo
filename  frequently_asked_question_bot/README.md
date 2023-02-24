@@ -11,8 +11,8 @@ An example of bot usage:
 
 ![image](https://user-images.githubusercontent.com/61429541/219064505-20e67950-cb88-4cff-afa5-7ce608e1282c.png)
 
-### Docker
-In order for the bot to work, set the bot token via [.env](.env.example). First step is creating `.env` file:
+### Run with Docker & Docker-Compose environment
+In order for the bot to work, set the bot token via [.env](.env.example). First step is creating your `.env` file:
 ```
 echo TG_BOT_TOKEN=******* >> .env
 ```
@@ -35,8 +35,8 @@ Running in background
 ```commandline
 docker-compose up -d
 ```
-### python env
-In order for the bot to work, set the bot token via [.env](.env.example). First step is setting enviriment variables:
+### Run with Python environment
+In order for the bot to work, set the bot token, example is in [.env](.env.example). First step is setting enviriment variables:
 ```
 export TG_BOT_TOKEN=*******
 ```
