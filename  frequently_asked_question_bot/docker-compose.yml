@@ -2,7 +2,6 @@ services:
     bot:
         build:
             context: bot/
-            target: prod
         volumes:
             - ./bot/:/app:ro
         env_file: .env
