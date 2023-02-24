@@ -12,22 +12,46 @@ An example of bot usage:
 
 ![image](https://user-images.githubusercontent.com/61429541/219064505-20e67950-cb88-4cff-afa5-7ce608e1282c.png)
 
-## Testing the bot
-```commandline
-docker build -t telebot-test --target test .
+### Docker
+Create `.env` file:
+```
+echo TG_BOT_TOKEN=******* >> ./bot/.env
 ```
 
-## Running the bot
-
-### With docker-compose
-
+Build the bot:
 ```commandline
-docker-compose up
+docker-compose build
+```
+Testing the bot:
+```commandline
+docker-compose run bot pytest test.py
 ```
 
-### With docker
-
+Running the bot:
 ```commandline
-docker build -t telebot-prod --target prod .
-docker run --env-file .env telebot-prod
+docker-compose run bot python run.py
+```
+
+Running in background
+```commandline
+docker-compose up -d
+```
+### python env
+Set enviriment variables:
+```
+export TG_BOT_TOKEN=*******
+```
+
+Build the bot:
+```commandline
+pip3 install -r requirements.txt
+```
+Testing the bot:
+```commandline
+pytest test.py
+```
+
+Running the bot:
+```commandline
+python run.py
 ```

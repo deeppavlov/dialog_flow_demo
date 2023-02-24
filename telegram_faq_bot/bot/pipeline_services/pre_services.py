@@ -26,4 +26,5 @@ def question_processor(ctx: Context):
 
     ctx.set_last_request(last_request)
 
-services=[question_processor]  # pre-services run before bot sends a response
+
+services = [question_processor]  # pre-services run before bot sends a response
