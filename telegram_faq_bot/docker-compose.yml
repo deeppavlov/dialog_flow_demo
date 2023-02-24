@@ -1,6 +1,6 @@
 services:
-    telegram-bot:
+    bot:
         build:
-            context: .
+            context: bot/
             target: prod
         env_file: .env

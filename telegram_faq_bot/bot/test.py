@@ -4,9 +4,9 @@ from dff.messengers.telegram import TelegramMessage, TelegramUI
 from dff.script import RESPONSE
 from dff.script.core.message import Button
 
-from bot.script.script import script
-from bot.bot import pipeline
-from bot.model import faq
+from script.script import script
+from telegram_faq.assistant.pipeline import pipeline
+from faq_model.model import faq
 
 
 @pytest.mark.asyncio

@@ -1,16 +1,11 @@
 """
-Bot
+Pre Services
 ---
-This module defines objects needed to run the bot.
+This module defines services that needed to process user request before script execution.
 """
-import os
+from dff.script import Context
 
-from dff.messengers.telegram import PollingTelegramInterface, TelegramMessenger
-from dff.pipeline import Pipeline
-from dff.script.core.context import Context
-
-from .script.script import script
-from .model import find_similar_questions
+from faq_model.model import find_similar_questions
 
 
 def question_processor(ctx: Context):
@@ -31,14 +26,4 @@ def question_processor(ctx: Context):
 
     ctx.set_last_request(last_request)
 
-
-interface = PollingTelegramInterface(token=os.getenv("TG_BOT_TOKEN", ""))
-
-
-pipeline = Pipeline.from_script(
-    script=script,
-    start_label=("proxy_flow", "start_node"),
-    fallback_label=("proxy_flow", "fallback_node"),
-    messenger_interface=interface,
-    pre_services=[question_processor],  # pre-services run before bot sends a response
-)
+services=[question_processor]  # pre-services run before bot sends a response
