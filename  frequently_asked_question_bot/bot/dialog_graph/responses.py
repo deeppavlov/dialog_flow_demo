@@ -8,7 +8,7 @@ from typing import cast
 from dff.script import Context, Actor
 from dff.script.core.message import Button
 from dff.messengers.telegram import TelegramMessage, TelegramUI, ParseMode
-from ..model import faq
+from faq_model.model import faq
 
 
 def suggest_similar_questions(ctx: Context, _: Actor):
