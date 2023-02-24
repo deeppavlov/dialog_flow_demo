@@ -6,16 +6,15 @@ This bot listens for user questions and finds similar questions in its database 
 
 It displays found questions as buttons. Upon pressing a button, the bot sends an answer to the question from the database.
 
-In order for the bot to work, set the bot token via [.env](.env).
 
 An example of bot usage:
 
 ![image](https://user-images.githubusercontent.com/61429541/219064505-20e67950-cb88-4cff-afa5-7ce608e1282c.png)
 
 ### Docker
-Create `.env` file:
+In order for the bot to work, set the bot token via [.env](.env.example). First step is creating `.env` file:
 ```
-echo TG_BOT_TOKEN=******* >> ./bot/.env
+echo TG_BOT_TOKEN=******* >> .env
 ```
 
 Build the bot:
@@ -37,7 +36,7 @@ Running in background
 docker-compose up -d
 ```
 ### python env
-Set enviriment variables:
+In order for the bot to work, set the bot token via [.env](.env.example). First step is setting enviriment variables:
 ```
 export TG_BOT_TOKEN=*******
 ```
