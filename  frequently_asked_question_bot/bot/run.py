@@ -18,8 +18,8 @@ def get_pipeline(interface_cli=None) -> Pipeline:
 
     else:
         raise RuntimeError(
-            "Telegram token (`TG_BOT_TOKEN`) is not set. `TG_BOT_TOKEN` can be set by `.env` file"
-            " to get more info look at README.md"
+            "Telegram token (`TG_BOT_TOKEN`) is not set. `TG_BOT_TOKEN` can be set via `.env` file."
+            " For more info see README.md."
         )
 
     pipeline = Pipeline.from_script(
