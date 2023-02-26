@@ -10,7 +10,7 @@ from pipeline_services import pre_services
 def get_pipeline(interface_cli=None) -> Pipeline:
     telegram_token = os.getenv("TG_BOT_TOKEN")
 
-    if telegram_token is not None:
+    if telegram_token:
         messenger_interface = PollingTelegramInterface(token=telegram_token)
 
     elif interface_cli is not None:
