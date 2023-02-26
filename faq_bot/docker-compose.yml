@@ -1,6 +1,0 @@
-services:
-    telegram-bot:
-        build:
-            context: .
-            target: prod
-        env_file: .env

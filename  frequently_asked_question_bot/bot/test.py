@@ -4,9 +4,9 @@ from dff.messengers.telegram import TelegramMessage, TelegramUI
 from dff.script import RESPONSE
 from dff.script.core.message import Button
 
-from bot.script.script import script
-from bot.bot import pipeline
-from bot.model import faq
+from dialog_graph import graph
+from run import get_pipeline
+from faq_model.model import faq
 
 
 @pytest.mark.asyncio
@@ -14,7 +14,7 @@ from bot.model import faq
     "happy_path",
     [
         (
-            (TelegramMessage(text="/start"), script["proxy_flow"]["welcome_node"][RESPONSE]),
+            (TelegramMessage(text="/start"), graph.script["qa_flow"]["welcome_node"][RESPONSE]),
             (
                 TelegramMessage(text="Why use arch?"),
                 TelegramMessage(
@@ -58,4 +58,4 @@ from bot.model import faq
     ],
 )
 async def test_happy_path(happy_path):
-    check_happy_path(pipeline=pipeline, happy_path=happy_path)
+    check_happy_path(pipeline=get_pipeline(interface_cli=True), happy_path=happy_path)
