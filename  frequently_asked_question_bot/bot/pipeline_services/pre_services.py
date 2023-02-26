@@ -1,7 +1,7 @@
 """
 Pre Services
 ---
-This module defines services that needed to process user request before script execution.
+This module defines services that process user requests before script transition.
 """
 from dff.script import Context
 
