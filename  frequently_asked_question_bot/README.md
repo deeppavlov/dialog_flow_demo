@@ -36,7 +36,7 @@ Running in background
 docker-compose up -d
 ```
 ### Run with Python environment
-In order for the bot to work, set the bot token, example is in [.env](.env.example). First step is setting enviriment variables:
+In order for the bot to work, set the bot token, example is in [.env](.env.example). First step is setting environment variables:
 ```
 export TG_BOT_TOKEN=*******
 ```
