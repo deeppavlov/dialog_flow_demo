@@ -6,8 +6,8 @@ Customer service bot built on `dff`. Uses telegram as an interface.
 
 This bot is designed to answer any type of user questions in a limited business domain (book shop).
 
-* [DNNC](#) model ([Zhang et al. 2020](https://arxiv.org/abs/2010.13009)) force is used for intent retrieval.
-* [ChatGPT](#) is used for context based question answering.
+* [DNNC](https://github.com/salesforce/DNNC-few-shot-intent) model ([Zhang et al. 2020](https://arxiv.org/abs/2010.13009)) force is used for intent retrieval.
+* [ChatGPT](https://openai.com/pricing#language-models) is used for context based question answering.
 
 ### DNNC
 
@@ -31,7 +31,7 @@ The API responds with a nested array containing 'label - score' pairs.
 ## Run the bot
 
 ### Run with Docker & Docker-Compose environment
-In order for the bot to work, set the bot token via [.env](.env.example). First step is creating your `.env` file:
+In order for the bot to work, set the bot token via [.env](.env.example). You should start by creating your own `.env` file:
 ```
 echo TG_BOT_TOKEN=*** >> .env
 echo OPENAI_API_TOKEN=*** >> .env
@@ -54,24 +54,4 @@ docker-compose run bot python run.py
 Running in background
 ```commandline
 docker-compose up -d
-```
-### Run with Python environment
-In order for the bot to work, set the bot token, example is in [.env](.env.example). You should start by setting environment variables:
-```
-export TG_BOT_TOKEN=***
-export OPENAI_API_TOKEN=***
-```
-
-Build the bot:
-```commandline
-pip3 install -r requirements.txt
-```
-Testing the bot:
-```commandline
-pytest test.py
-```
-
-Running the bot:
-```commandline
-python run.py
 ```

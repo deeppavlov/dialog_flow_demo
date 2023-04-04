@@ -1,6 +1,6 @@
 services:
     assistant-bot:
-      env_file: [ .env.example ]
+      env_file: [ .env ]
       build:
         args:
           SERVICE_NAME: assistant-bot
@@ -10,7 +10,7 @@ services:
         - ./bot/:/app:ro
 
     dnnc:
-      env_file: [ .env.example ]
+      env_file: [ .env ]
       build:
         args:
           ROBERTA_NLI: https://storage.googleapis.com/sfr-dnnc-few-shot-intent/roberta_nli.zip
