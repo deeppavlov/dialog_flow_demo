@@ -3,8 +3,8 @@ from dff.utils.testing.common import check_happy_path
 from dff.messengers.telegram import TelegramMessage
 from dff.script import RESPONSE, Message
 
-from dff_chatgpt_skill.main import script
-from dff_chatgpt_skill.pipeline import pipeline
+from dialog_graph.graph import script
+from run import get_pipeline
 
 
 @pytest.mark.asyncio
@@ -40,4 +40,4 @@ from dff_chatgpt_skill.pipeline import pipeline
     ],
 )
 async def test_happy_path(happy_path):
-    check_happy_path(pipeline=pipeline, happy_path=happy_path)
+    check_happy_path(pipeline=get_pipeline(interface_cli=True), happy_path=happy_path)

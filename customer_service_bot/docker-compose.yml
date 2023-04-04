@@ -1,19 +1,16 @@
 services:
     assistant-bot:
-      env_file: [ .env ]
+      env_file: [ .env.example ]
       build:
         args:
           SERVICE_NAME: assistant-bot
           SERVICE_PORT: 5000
-        context: .
-      environment:
-        - CUDA_VISIBLE_DEVICES=0
-        - FLASK_APP=server
+        context: bot/
       volumes:
-        - .:/app
+        - ./bot/:/app:ro
 
     dnnc:
-      env_file: [ .env ]
+      env_file: [ .env.example ]
       build:
         args:
           ROBERTA_NLI: https://storage.googleapis.com/sfr-dnnc-few-shot-intent/roberta_nli.zip
@@ -23,12 +20,3 @@ services:
           TRAIN_FILE_PATH: ./data/clinc150/all/train/
           DEV_FILE_PATH: ./data/clinc150/all/dev/
         context: ./dnnc/
-      environment:
-        - CUDA_VISIBLE_DEVICES=0
-        - FLASK_APP=server
-      deploy:
-        resources:
-          limits:
-            memory: 8G
-          reservations:
-            memory: 8G

@@ -7,7 +7,7 @@ from typing import Callable
 
 from dff.script import Context, Actor
 
-from . import utils
+from . import consts
 
 
 def has_intent(labels: list) -> Callable:
@@ -19,7 +19,7 @@ def has_intent(labels: list) -> Callable:
         if ctx.validation:
             return False
 
-        return any([label in ctx.misc.get(utils.DNNC_INTENTS, []) for label in labels])
+        return any([label in ctx.misc.get(consts.DNNC_INTENTS, []) for label in labels])
 
     return has_intent_inner
 
@@ -33,6 +33,6 @@ def slots_filled(slots: list) -> Callable:
         if ctx.validation:
             return False
 
-        return all([slot in ctx.misc[utils.SLOTS] for slot in slots])
+        return all([slot in ctx.misc[consts.SLOTS] for slot in slots])
 
     return slots_filled_inner
