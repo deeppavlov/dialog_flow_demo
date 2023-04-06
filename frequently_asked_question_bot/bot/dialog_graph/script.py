@@ -1,6 +1,6 @@
 """
-Graph
-------
+Script
+--------
 This module defines a script that the bot follows during conversation.
 """
 from dff.script import RESPONSE, TRANSITIONS, LOCAL
