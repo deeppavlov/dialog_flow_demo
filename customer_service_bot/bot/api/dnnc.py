@@ -1,7 +1,7 @@
 import requests
 
 
-DNNC_SERVICE = f'http://localhost:4999/respond'
+DNNC_SERVICE = "http://localhost:4999/respond"
 
 
 def get_intents(request: str):
@@ -11,5 +11,5 @@ def get_intents(request: str):
     except requests.RequestException:
         response = None
     if response and response.status_code == 200:
-        return [response.json()[0][0]] 
+        return [response.json()[0][0]]
     return []
