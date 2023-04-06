@@ -7,7 +7,7 @@ from dialog_graph import graph
 from pipeline_services import pre_services
 
 
-def get_pipeline(interface_cli=None) -> Pipeline:
+def get_pipeline(interface_cli: bool = False) -> Pipeline:
     telegram_token = os.getenv("TG_BOT_TOKEN")
 
     if telegram_token:
