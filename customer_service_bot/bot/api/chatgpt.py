@@ -28,26 +28,40 @@ What follows is a question and an answer. Just write 'true' if the answer was sa
 openai.api_key = os.getenv("OPENAI_API_TOKEN")
 
 
-def get_output(request: str) -> str:
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": CHATGPT_MAIN_PROMPT},
-            {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
-            {"role": "user", "content": request},
-        ],
-    )
-    return response["choices"][0]["message"]["content"]
+def get_output_factory():
+    def get_output_inner(request: str) -> str:
+        if get_output_inner.num_calls == 0:
+            messages = [
+                {"role": "system", "content": CHATGPT_MAIN_PROMPT},
+                {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
+                {"role": "user", "content": request},
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
+                {"role": "user", "content": request},
+            ]
+        get_output_inner.num_calls += 1
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+        )
+        return response["choices"][0]["message"]["content"]
+
+    get_output_inner.num_calls = 0
+    return get_output_inner
 
 
 def get_coherence(request: str, response: str) -> str:
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": CHATGPT_MAIN_PROMPT},
             {"role": "system", "content": CHATGPT_COHERENCE_PROMPT},
             {"role": "user", "content": request},
             {"role": "assistant", "content": response},
         ],
     )
     return response["choices"][0]["message"]["content"]
+
+
+get_output = get_output_factory()
