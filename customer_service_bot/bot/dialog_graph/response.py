@@ -1,3 +1,8 @@
+"""
+Response
+----------
+This module contains response customization functions.
+"""
 from dff.script import Context, Actor, Message
 
 from . import consts

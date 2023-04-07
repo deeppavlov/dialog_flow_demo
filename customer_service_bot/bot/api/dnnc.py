@@ -1,3 +1,8 @@
+"""
+DNNC
+---------
+This module includes queries to a local dnnc server.
+"""
 import requests
 
 

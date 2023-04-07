@@ -1,3 +1,8 @@
+"""
+Chatgpt
+---------
+This module defines functions for Openai API interaction.
+"""
 import os
 import openai
 

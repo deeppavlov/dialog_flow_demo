@@ -1,3 +1,9 @@
+"""
+Processing
+------------
+This module contains processing routines for the customer service
+chat bot.
+"""
 import re
 from dff.script import Context, Actor
 from api import dnnc, chatgpt
