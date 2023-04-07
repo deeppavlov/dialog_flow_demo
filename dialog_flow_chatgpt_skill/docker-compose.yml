@@ -1,0 +1,34 @@
+services:
+    assistant-bot:
+      env_file: [ .env ]
+      build:
+        args:
+          SERVICE_NAME: assistant-bot
+          SERVICE_PORT: 5000
+        context: .
+      environment:
+        - CUDA_VISIBLE_DEVICES=0
+        - FLASK_APP=server
+      volumes:
+        - .:/app
+
+    dnnc:
+      env_file: [ .env ]
+      build:
+        args:
+          ROBERTA_NLI: https://storage.googleapis.com/sfr-dnnc-few-shot-intent/roberta_nli.zip
+          DNNC_URL: https://github.com/ruthenian8/DNNC-few-shot-intent.git
+          CLINC_URL: https://raw.githubusercontent.com/clinc/oos-eval/master/data/data_full.json
+          SERVICE_PORT: 4999
+          TRAIN_FILE_PATH: ./data/clinc150/all/train/
+          DEV_FILE_PATH: ./data/clinc150/all/dev/
+        context: ./dnnc/
+      environment:
+        - CUDA_VISIBLE_DEVICES=0
+        - FLASK_APP=server
+      deploy:
+        resources:
+          limits:
+            memory: 8G
+          reservations:
+            memory: 8G

@@ -1,0 +1,48 @@
+# syntax=docker/dockerfile:1
+FROM pytorch/pytorch:1.6.0-cuda10.1-cudnn7-runtime as base
+
+RUN apt-get update && \
+    apt-get install -y gnupg2 && \
+    apt-get install -y curl && \
+    apt-get install -y --allow-unauthenticated wget && \
+    apt-get install -y git && \
+    apt-get install -y unzip && \
+    apt-key del 7fa2af80  && \
+    rm -f /etc/apt/sources.list.d/cuda*.list && \
+    curl https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb \
+    -o cuda-keyring_1.0-1_all.deb && \
+    dpkg -i cuda-keyring_1.0-1_all.deb
+    # update cuda keyring (https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/)
+
+ARG SERVICE_PORT
+ENV SERVICE_PORT ${SERVICE_PORT}
+ARG DNNC_URL
+ENV DNNC_URL ${DNNC_URL}
+ARG ROBERTA_NLI
+ENV ROBERTA_NLI ${ROBERTA_NLI}
+ARG CLINC_URL
+ENV CLINC_URL ${CLINC_URL}
+ARG TRAIN_FILE_PATH
+ENV TRAIN_FILE_PATH ${TRAIN_FILE_PATH}
+ARG DEV_FILE_PATH
+ENV DEV_FILE_PATH ${DEV_FILE_PATH}
+
+WORKDIR /src
+RUN git clone ${DNNC_URL} .
+RUN pip install -r /src/requirements.txt
+COPY ./requirements.txt /src/service_requirements.txt
+RUN pip install -r /src/service_requirements.txt
+RUN pip install tensorboard
+
+RUN wget ${ROBERTA_NLI}
+RUN unzip roberta_nli.zip && rm roberta_nli.zip
+
+WORKDIR /src/data/clinc150
+RUN mkdir original_data
+RUN wget ${CLINC_URL} -P original_data/
+RUN python3 ./preprocess.py
+
+FROM base as prod
+WORKDIR /src
+COPY . /src
+CMD gunicorn --workers=1 server:app -b 0.0.0.0:${SERVICE_PORT} --timeout=1200
