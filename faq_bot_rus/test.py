@@ -46,7 +46,7 @@ from bot.model import faq
             (
                 TelegramMessage(text="Где я?"),
                 TelegramMessage(
-                    text="У меня нет ответа на этот вопрос. Вот список вопросов, на которые я знаю ответ:",
+                    text="У меня нет ответа на этот вопрос. Вот список вопросов, на которые я могу дать ответ:",
                     ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in faq]),
                 ),
             ),
