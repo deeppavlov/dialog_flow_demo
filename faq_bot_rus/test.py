@@ -16,43 +16,43 @@ from bot.model import faq
         (
             (TelegramMessage(text="/start"), script["proxy_flow"]["welcome_node"][RESPONSE]),
             (
-                TelegramMessage(text="Why use arch?"),
+                TelegramMessage(text="Зачем мне использовать Arch?"),
                 TelegramMessage(
-                    text="I found similar questions in my database:",
+                    text="Я нашел похожие вопросы в своей базе данных:",
                     ui=TelegramUI(
                         buttons=[
                             Button(text=q, payload=q)
-                            for q in ["Why would I want to use Arch?", "Why would I not want to use Arch?"]
+                            for q in ["Зачем мне использовать Arch?", "Почему мне не стоит использовать Arch?"]
                         ]
                     ),
                 ),
             ),
             (
-                TelegramMessage(callback_query="Why would I want to use Arch?"),
-                TelegramMessage(text=faq["Why would I want to use Arch?"]),
+                TelegramMessage(callback_query="Зачем мне использовать Arch?"),
+                TelegramMessage(text=faq["Зачем мне использовать Arch?"]),
             ),
             (
-                TelegramMessage(callback_query="Why would I not want to use Arch?"),
-                TelegramMessage(text=faq["Why would I not want to use Arch?"]),
+                TelegramMessage(callback_query="Почему мне не стоит использовать Arch?"),
+                TelegramMessage(text=faq["Почему мне не стоит использовать Arch?"]),
             ),
             (
-                TelegramMessage(text="What is arch linux?"),
+                TelegramMessage(text="Что такое Arch Linux?"),
                 TelegramMessage(
-                    text="I found similar questions in my database:",
-                    ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in ["What is Arch Linux?"]]),
+                    text="Я нашел похожие вопросы в своей базе данных:",
+                    ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in ["Что такое Arch Linux?"]]),
                 ),
             ),
-            (TelegramMessage(callback_query="What is Arch Linux?"), TelegramMessage(text=faq["What is Arch Linux?"])),
+            (TelegramMessage(callback_query="Что такое Arch Linux?"), TelegramMessage(text=faq["Что такое Arch Linux?"])),
             (
-                TelegramMessage(text="where am I?"),
+                TelegramMessage(text="Где я?"),
                 TelegramMessage(
-                    text="I don't have an answer to that question. Here's a list of questions I know an answer to:",
+                    text="У меня нет ответа на этот вопрос. Вот список вопросов, на которые я знаю ответ:",
                     ui=TelegramUI(buttons=[Button(text=q, payload=q) for q in faq]),
                 ),
             ),
             (
-                TelegramMessage(callback_query="What architectures does Arch support?"),
-                TelegramMessage(text=faq["What architectures does Arch support?"]),
+                TelegramMessage(callback_query="Какие архитектуры поддерживает Arch?"),
+                TelegramMessage(text=faq["Какие архитектуры поддерживает Arch?"]),
             ),
         )
     ],

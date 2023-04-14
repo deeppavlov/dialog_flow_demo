@@ -26,7 +26,7 @@ script = {
             TRANSITIONS: qa_transitions,
         },
         "fallback_node": {
-            RESPONSE: TelegramMessage(text="Что-то пошло не так. Используйте `/restart`, чтобы начать с начала."),
+            RESPONSE: TelegramMessage(text="Что-то пошло не так. Используйте `/restart`, чтобы начать сначала."),
             TRANSITIONS: {"welcome_node": cnd.exact_match(TelegramMessage(text="/restart"))},
         },
     },
