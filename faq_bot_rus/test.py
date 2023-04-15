@@ -16,24 +16,24 @@ from bot.model import faq
         (
             (TelegramMessage(text="/start"), script["proxy_flow"]["welcome_node"][RESPONSE]),
             (
-                TelegramMessage(text="Зачем мне использовать Arch?"),
+                TelegramMessage(text="Почему мне стоит использовать Arch?"),
                 TelegramMessage(
                     text="Я нашел похожие вопросы в своей базе данных:",
                     ui=TelegramUI(
                         buttons=[
                             Button(text=q, payload=q)
-                            for q in ["Зачем мне использовать Arch?", "Почему мне не стоит использовать Arch?"]
+                            for q in ["Почему мне стоит использовать Arch?", "Почему мне стоит использовать Arch?"]
                         ]
                     ),
                 ),
             ),
             (
-                TelegramMessage(callback_query="Зачем мне использовать Arch?"),
-                TelegramMessage(text=faq["Зачем мне использовать Arch?"]),
+                TelegramMessage(callback_query="Почему мне стоит использовать Arch?"),
+                TelegramMessage(text=faq["Почему мне стоит использовать Arch?"]),
             ),
             (
-                TelegramMessage(callback_query="Почему мне не стоит использовать Arch?"),
-                TelegramMessage(text=faq["Почему мне не стоит использовать Arch?"]),
+                TelegramMessage(callback_query="Когда не надо использовать Arch?"),
+                TelegramMessage(text=faq["Когда не надо использовать Arch?"]),
             ),
             (
                 TelegramMessage(text="Что такое Arch Linux?"),
