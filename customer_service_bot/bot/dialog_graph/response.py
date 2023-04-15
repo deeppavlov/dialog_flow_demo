@@ -1,6 +1,6 @@
 """
 Response
-----------
+--------
 This module contains response customization functions.
 """
 from dff.script import Context, Actor, Message
@@ -8,7 +8,7 @@ from dff.script import Context, Actor, Message
 from . import consts
 
 FALLBACK_RESPONSE = (
-    "I'm afraid I cannot elaborate on this subject. If you have any other questions though, feel free to ask them."
+    "I'm afraid I cannot elaborate on this subject. If you have any other questions, feel free to ask them."
 )
 
 

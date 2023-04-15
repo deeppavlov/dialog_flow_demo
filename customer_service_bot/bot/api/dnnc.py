@@ -1,6 +1,6 @@
 """
 DNNC
----------
+----
 This module includes queries to a local DNNC service.
 """
 import requests
