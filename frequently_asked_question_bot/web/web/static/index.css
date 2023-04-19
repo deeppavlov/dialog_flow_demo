@@ -143,7 +143,7 @@ body {
   height: 0;
   border-top: 10px solid rgba(25, 147, 147, 0.2);
 }
-.floating-chat .chat .messages li.other {
+.floating-chat .chat .messages li.bot {
   animation: show-chat-odd 0.15s 1 ease-in;
   -moz-animation: show-chat-odd 0.15s 1 ease-in;
   -webkit-animation: show-chat-odd 0.15s 1 ease-in;
@@ -151,11 +151,11 @@ body {
   margin-right: 45px;
   color: #0AD5C1;
 }
-.floating-chat .chat .messages li.other:before {
+.floating-chat .chat .messages li.bot:before {
   right: -45px;
   background-image: url(https://github.com/Thatkookooguy.png);
 }
-.floating-chat .chat .messages li.other:after {
+.floating-chat .chat .messages li.bot:after {
   border-right: 10px solid transparent;
   right: -10px;
 }
