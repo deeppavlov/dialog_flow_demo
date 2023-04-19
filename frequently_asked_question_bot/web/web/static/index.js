@@ -1,9 +1,22 @@
 var element = $('.floating-chat');
-var myStorage = localStorage;
+var client_id = createUUID();
 
-if (!myStorage.getItem('chatID')) {
-    myStorage.setItem('chatID', createUUID());
+/*
+Here Websocket URI is computed using current location. (https://stackoverflow.com/a/10418013)
+I don't know how reliable that is, in prod it is probably
+better to use hardcoded uri, e.g. ws_uri = "ws://example.com/ws/..."
+*/
+var loc = window.location, ws_uri;
+if (loc.protocol === "https:") {
+    ws_uri = "wss:";
+} else {
+    ws_uri = "ws:";
 }
+ws_uri += "//" + loc.host;
+ws_uri += loc.pathname + "ws/" + client_id;
+
+var ws = new WebSocket(ws_uri);
+ws.onmessage = receiveBotMessage;
 
 setTimeout(function() {
     element.addClass('enter');
@@ -53,32 +66,40 @@ function createUUID() {
     return uuid;
 }
 
-function sendNewMessage() {
-    var userInput = $('.text-box');
-    var newMessage = userInput.html().replace(/\<div\>|\<br.*?\>/ig, '\n').replace(/\<\/div\>/g, '').trim().replace(/\n/g, '<br>');
+function addMessageToContainer(messageToAdd, type) {
+    var newMessage = messageToAdd;
 
     if (!newMessage) return;
 
     var messagesContainer = $('.messages');
 
     messagesContainer.append([
-        '<li class="user">',
+        `<li class="${type}">`,
         newMessage,
         '</li>'
     ].join(''));
 
-    // clean out old message
-    userInput.html('');
-    // focus on input
-    userInput.focus();
-
-    messagesContainer.finish().animate({
+    messagesContainer.animate({
         scrollTop: messagesContainer.prop("scrollHeight")
     }, 250);
+
+    return newMessage;
+}
+
+function sendNewMessage() {
+    var input = document.getElementById("messageText");
+    var result = addMessageToContainer(input.value, "user");
+    ws.send(result);
+    input.value = '';
+    event.preventDefault();
+}
+
+function receiveBotMessage(event) {
+    addMessageToContainer(event.data, "bot");
 }
 
 function onMetaAndEnter(event) {
-    if ((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+    if (event.keyCode == 13) {
         sendNewMessage();
     }
 }
