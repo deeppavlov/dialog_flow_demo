@@ -153,7 +153,7 @@ body {
 }
 .floating-chat .chat .messages li.bot:before {
   right: -45px;
-  background-image: url(https://github.com/Thatkookooguy.png);
+  background-image: url(https://thumb.tildacdn.com/tild3665-3130-4938-a265-363663393337/-/resize/264x/-/format/webp/_DeepPavlov_200x200-.png);
 }
 .floating-chat .chat .messages li.bot:after {
   border-right: 10px solid transparent;
@@ -169,7 +169,7 @@ body {
 }
 .floating-chat .chat .messages li.user:before {
   left: -45px;
-  background-image: url(https://github.com/ortichon.png);
+  background-image: url(https://lens-storage.storage.googleapis.com/png/2fa7d0ae96604dca94fb71f298d31dc8);
 }
 .floating-chat .chat .messages li.user:after {
   border-left: 10px solid transparent;
