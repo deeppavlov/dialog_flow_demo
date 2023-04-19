@@ -3,7 +3,7 @@ from dff.utils.testing.common import check_happy_path
 from dff.messengers.telegram import TelegramMessage
 from dff.script import RESPONSE, Message
 
-from dialog_graph.graph import script
+from dialog_graph.script import script
 from run import get_pipeline
 
 

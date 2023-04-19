@@ -42,12 +42,12 @@ docker-compose build
 ```
 Testing the bot:
 ```commandline
-docker-compose run bot pytest test.py
+docker-compose run assistant pytest test.py
 ```
 
 Running the bot:
 ```commandline
-docker-compose run bot python run.py
+docker-compose run assistant python run.py
 ```
 
 Running in background

@@ -3,7 +3,7 @@ import os
 from dff.messengers.telegram import PollingTelegramInterface
 from dff.pipeline import Pipeline
 
-from dialog_graph import graph
+from dialog_graph import script
 
 
 def get_pipeline(use_cli_interface: bool = False) -> Pipeline:
