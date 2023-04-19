@@ -34,7 +34,8 @@ openai.api_key = os.getenv("OPENAI_API_TOKEN")
 
 
 def get_output_factory():
-    """Construct a get_output function encapsulating the execution counter.
+    """
+    Construct a get_output function encapsulating the execution counter.
     The function prompts ChatGPT for generated output.
     The main prompt is only included
     on the first invocation of the function.
