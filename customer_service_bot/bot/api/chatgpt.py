@@ -40,6 +40,7 @@ def get_output_factory():
     The main prompt is only included
     on the first invocation of the function.
     """
+
     def get_output_inner(request: str) -> str:
         if get_output_inner.num_calls == 0:
             messages = [

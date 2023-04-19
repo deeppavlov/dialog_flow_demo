@@ -12,7 +12,7 @@ def get_pipeline(use_cli_interface: bool = False) -> Pipeline:
 
     if not openai_api_token:
         raise RuntimeError("Openai api token (`OPENAI_API_TOKEN`) system variable is required.")
-    
+
     if use_cli_interface:
         messenger_interface = None
     elif telegram_token:
