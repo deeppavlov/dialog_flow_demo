@@ -62,7 +62,7 @@ function sendNewMessage() {
     var messagesContainer = $('.messages');
 
     messagesContainer.append([
-        '<li class="self">',
+        '<li class="user">',
         newMessage,
         '</li>'
     ].join(''));
