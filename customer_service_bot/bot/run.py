@@ -6,18 +6,17 @@ from dff.pipeline import Pipeline
 from dialog_graph import graph
 
 
-def get_pipeline(interface_cli: bool = False) -> Pipeline:
+def get_pipeline(use_cli_interface: bool = False) -> Pipeline:
     telegram_token = os.getenv("TG_BOT_TOKEN")
     openai_api_token = os.getenv("OPENAI_API_TOKEN")
 
     if not openai_api_token:
         raise RuntimeError("Openai api token (`OPENAI_API_TOKEN`) system variable is required.")
-
-    if telegram_token:
-        messenger_interface = PollingTelegramInterface(token=telegram_token)
-
-    elif interface_cli is not None:
+    
+    if use_cli_interface:
         messenger_interface = None
+    elif telegram_token:
+        messenger_interface = PollingTelegramInterface(token=telegram_token)
 
     else:
         raise RuntimeError(
