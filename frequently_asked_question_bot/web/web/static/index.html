@@ -1,31 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat</title>
+        <link rel="stylesheet" href="static/index.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="floating-chat">
+            <i class="fa fa-comments" aria-hidden="true"></i>
+            <div class="chat">
+                <div class="header">
+                    <span class="title">
+                        FAQ Bot
+                    </span>
+                    <button>
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
 
-<div class="floating-chat">
-    <i class="fa fa-comments" aria-hidden="true"></i>
-    <div class="chat">
-        <div class="header">
-            <span class="title">
-                what's on your mind?
-            </span>
-            <button>
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </button>
-
+                </div>
+                <ul class="messages">
+                </ul>
+                <div class="footer">
+                    <div class="text-box" contenteditable="true" disabled="true"></div>
+                    <button id="sendMessage">send</button>
+                </div>
+            </div>
         </div>
-        <ul class="messages">
-            <li class="other">asdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdas</li>
-            <li class="other">Are we dogs??? 🐶</li>
-            <li class="self">no... we're human</li>
-            <li class="other">are you sure???</li>
-            <li class="self">yes.... -___-</li>
-            <li class="other">if we're not dogs.... we might be monkeys 🐵</li>
-            <li class="self">i hate you</li>
-            <li class="other">don't be so negative! here's a banana 🍌</li>
-            <li class="self">......... -___-</li>
-        </ul>
-        <div class="footer">
-            <div class="text-box" contenteditable="true" disabled="true"></div>
-            <button id="sendMessage">send</button>
-        </div>
-    </div>
-</div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script src="static/index.js" type="module"></script>
+    </body>
+</html>
 
