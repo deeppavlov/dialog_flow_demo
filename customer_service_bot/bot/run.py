@@ -32,3 +32,8 @@ def get_pipeline(use_cli_interface: bool = False) -> Pipeline:
     )
 
     return pipeline
+
+
+if __name__ == "__main__":
+    pipeline = get_pipeline()
+    pipeline.run()
