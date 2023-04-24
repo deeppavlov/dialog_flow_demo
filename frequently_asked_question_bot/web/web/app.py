@@ -3,7 +3,6 @@ from bot.pipeline import pipeline
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 from dff.script import Message, Context
 
 
@@ -13,9 +12,6 @@ app = FastAPI()
 @app.get("/")
 async def index():
     return FileResponse('static/index.html', media_type='text/html')
-
-
-app.mount('/static', StaticFiles(directory='static', html=True), name='static')
 
 
 @app.websocket("/ws/{client_id}")
