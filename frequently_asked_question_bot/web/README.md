@@ -10,6 +10,8 @@ The bot itself works in a following manner:
 
 Whenever a user asks a question it searches for the most similar question in its database using `clips/mfaq` an answer to which is sent to the user.
 
+A showcase of the website:
+![faq_web](https://user-images.githubusercontent.com/61429541/233875303-b9bc81c9-522b-4596-8599-6efcfa708d1e.gif)
 
 ### Run with Docker & Docker-Compose environment
 
