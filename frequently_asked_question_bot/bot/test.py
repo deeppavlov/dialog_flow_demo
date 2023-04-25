@@ -58,4 +58,4 @@ from faq_model.model import faq
     ],
 )
 async def test_happy_path(happy_path):
-    check_happy_path(pipeline=get_pipeline(interface_cli=True), happy_path=happy_path)
+    check_happy_path(pipeline=get_pipeline(use_cli_interface=True), happy_path=happy_path)

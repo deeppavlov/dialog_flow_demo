@@ -3,7 +3,8 @@ Response
 --------
 This module contains response customization functions.
 """
-from dff.script import Context, Actor, Message
+from dff.script import Context, Message
+from dff.pipeline import Pipeline
 
 from . import consts
 
@@ -12,7 +13,7 @@ FALLBACK_RESPONSE = (
 )
 
 
-def choose_response(ctx: Context, _: Actor) -> Message:
+def choose_response(ctx: Context, _: Pipeline) -> Message:
     """
     Return ChatGPT response if it is coherent, fall back to
     predetermined response otherwise.
@@ -24,7 +25,7 @@ def choose_response(ctx: Context, _: Actor) -> Message:
     return Message(text=(response if coherence else FALLBACK_RESPONSE))
 
 
-def confirm(ctx: Context, _: Actor) -> Message:
+def confirm(ctx: Context, _: Pipeline) -> Message:
     if ctx.validation:
         return Message()
     msg_text = (

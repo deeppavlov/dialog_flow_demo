@@ -5,7 +5,8 @@ This module contains processing routines for the customer service
 chat bot.
 """
 import re
-from dff.script import Context, Actor
+from dff.script import Context
+from dff.pipeline import Pipeline
 from api import dnnc, chatgpt
 from . import consts
 
@@ -15,7 +16,7 @@ def extract_intents():
     Extract intents from DNNC response.
     """
 
-    def extract_intents_inner(ctx: Context, _: Actor) -> Context:
+    def extract_intents_inner(ctx: Context, _: Pipeline) -> Context:
         ctx.misc[consts.DNNC_INTENTS] = dnnc.get_intents(ctx.last_request)
         return ctx
 
@@ -27,7 +28,7 @@ def clear_intents():
     Clear intents container.
     """
 
-    def clear_intents_inner(ctx: Context, _: Actor) -> Context:
+    def clear_intents_inner(ctx: Context, _: Pipeline) -> Context:
         ctx.misc[consts.DNNC_INTENTS] = []
         return ctx
 
@@ -39,7 +40,7 @@ def clear_slots():
     Clear slots container.
     """
 
-    def clear_slots_inner(ctx: Context, _: Actor) -> Context:
+    def clear_slots_inner(ctx: Context, _: Pipeline) -> Context:
         ctx.misc[consts.SLOTS] = {}
         return ctx
 
@@ -52,7 +53,7 @@ def generate_response():
     """
     expression = re.compile(r"true", re.IGNORECASE)
 
-    def generate_response_inner(ctx: Context, _: Actor) -> Context:
+    def generate_response_inner(ctx: Context, _: Pipeline) -> Context:
         if ctx.validation:
             return ctx
 
@@ -71,7 +72,7 @@ def extract_item():
     """
     expression = re.compile(r".+")
 
-    def extract_item_inner(ctx: Context, _: Actor) -> Context:
+    def extract_item_inner(ctx: Context, _: Pipeline) -> Context:
         if ctx.validation:
             return ctx
 
@@ -89,7 +90,7 @@ def extract_payment_method():
     """Extract payment method slot."""
     expression = re.compile(r"(card|cash)", re.IGNORECASE)
 
-    def extract_payment_method_inner(ctx: Context, _: Actor) -> Context:
+    def extract_payment_method_inner(ctx: Context, _: Pipeline) -> Context:
         if ctx.validation:
             return ctx
 
@@ -108,7 +109,7 @@ def extract_delivery():
     """
     expression = re.compile(r"(pickup|deliver)", re.IGNORECASE)
 
-    def extract_delivery_inner(ctx: Context, _: Actor) -> Context:
+    def extract_delivery_inner(ctx: Context, _: Pipeline) -> Context:
         if ctx.validation:
             return ctx
 
