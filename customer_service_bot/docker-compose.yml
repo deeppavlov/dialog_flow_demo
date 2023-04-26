@@ -2,6 +2,8 @@ version: "2"
 services:
     assistant:
       env_file: [ .env ]
+      depends_on:
+        - dnnc
       build:
         args:
           SERVICE_NAME: assistant
