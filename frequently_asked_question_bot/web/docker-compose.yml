@@ -24,7 +24,7 @@ services:
     depends_on:
       - web
     ports:
-      - 61261:80
+      - 80:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - static_volume:/app/static
