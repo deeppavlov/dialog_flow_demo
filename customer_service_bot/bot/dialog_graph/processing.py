@@ -5,6 +5,7 @@ This module contains processing routines for the customer service
 chat bot.
 """
 import re
+from string import punctuation
 from dff.script import Context
 from dff.pipeline import Pipeline
 from api import dnnc, chatgpt
@@ -80,7 +81,7 @@ def extract_item():
         search = re.search(expression, text)
         if search is not None:
             group = search.group()
-            ctx.misc[consts.SLOTS]["items"] = group.split(", ")
+            ctx.misc[consts.SLOTS]["items"] = [item.strip(punctuation) for item in group.split(", ")]
         return ctx
 
     return extract_item_inner
