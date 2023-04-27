@@ -33,7 +33,7 @@ The API responds with a nested array containing `label - score` pairs.
 In order for the bot to work, set the bot token via [.env](.env.example). You should start by creating your own `.env` file:
 ```
 echo TG_BOT_TOKEN=*** >> .env
-echo OPENAI_API_TOKEN=*** >> .env
+echo OPENAI_API_KEY=*** >> .env
 ```
 
 Build the bot:

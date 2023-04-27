@@ -3,8 +3,9 @@ ChatGPT
 -------
 This module defines functions for OpenAI API interaction.
 """
-import os
-import openai
+from langchain.chat_models import ChatOpenAI
+import langchain
+from langchain.cache import InMemoryCache
 
 CHATGPT_MAIN_PROMPT = """
 You are a helpful assistant for a book shop "Book Lovers Paradise".
@@ -17,15 +18,31 @@ Refund policy within 30 days of purchase.
 Loyalty program for frequent customers (10% off purchases).
 """  # shortened the prompt to reduce token consumption.
 
-CHATGPT_QUESTION_PROMPT = """
-What follows is a user query: answer if related to the given description or deny if unrelated.
-"""
+CHATGPT_QUESTION_PROMPT = langchain.PromptTemplate(
+    input_variables=["question"],
+    template=CHATGPT_MAIN_PROMPT
+    + """
 
-CHATGPT_COHERENCE_PROMPT = """
-What follows is a question and an answer. Just write 'true' if the answer was satisfactory or 'false' otherwise.
-"""
+    What follows is a user query: 
+    answer if related to the given description or deny if unrelated.
+    {question}
+    """,
+)
 
-openai.api_key = os.getenv("OPENAI_API_TOKEN")
+CHATGPT_COHERENCE_PROMPT = langchain.PromptTemplate(
+    input_variables=["question", "answer"],
+    template=CHATGPT_MAIN_PROMPT
+    + """
+
+    What follows is a question and an answer. 
+    Just write 'true' if the answer was satisfactory or 'false' otherwise. 
+    {question} 
+    {answer}
+    """,
+)
+
+langchain.llm_cache = InMemoryCache()
+llm = ChatOpenAI(model_name="gpt-3.5-turbo")
 
 
 def get_output_factory():
@@ -35,38 +52,27 @@ def get_output_factory():
     The main prompt is only included
     on the first invocation of the function.
     """
+    llm_chain = langchain.LLMChain(prompt=CHATGPT_QUESTION_PROMPT, llm=llm)
 
     def get_output_inner(request: str) -> str:
-        messages = [
-            {"role": "system", "content": CHATGPT_MAIN_PROMPT},
-            {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
-            {"role": "user", "content": request},
-        ]  # temporary fix until a better solution is found
-        get_output_inner.num_calls += 1
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-        )
-        return response["choices"][0]["message"]["content"]
+        result = llm_chain.run(request)
+        return result
 
-    get_output_inner.num_calls = 0
     return get_output_inner
 
 
-def get_coherence(request: str, response: str) -> str:
-    """
-    Prompt ChatGPT to evaluate the coherence of a request
-    response pair.
-    """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": CHATGPT_COHERENCE_PROMPT},
-            {"role": "user", "content": request},
-            {"role": "assistant", "content": response},
-        ],
-    )
-    return response["choices"][0]["message"]["content"]
+def get_coherence_factory():
+    llm_chain = langchain.LLMChain(prompt=CHATGPT_COHERENCE_PROMPT, llm=llm)
+
+    def get_coherence(request: str, response: str) -> str:
+        """
+        Prompt ChatGPT to evaluate the coherence of a request
+        response pair.
+        """
+        result = llm_chain.run(question=request, answer=response)
+        return result
+
+    return get_coherence
 
 
 get_output = get_output_factory()
