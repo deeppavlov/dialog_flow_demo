@@ -23,4 +23,4 @@ def received_button_click(ctx: Context, _: Pipeline):
         return False
     last_request = cast(TelegramMessage, ctx.last_request)
 
-    return vars(last_request).get('callback_query') is not None
+    return vars(last_request).get("callback_query") is not None

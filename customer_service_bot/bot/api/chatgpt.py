@@ -15,7 +15,7 @@ Knowledgeable staff. Online catalogue for easy browsing and ordering.
 Comfortable seating areas and peaceful atmosphere.
 Refund policy within 30 days of purchase.
 Loyalty program for frequent customers (10% off purchases).
-""" # shortened the prompt to reduce token consumption.
+"""  # shortened the prompt to reduce token consumption.
 
 CHATGPT_QUESTION_PROMPT = """
 What follows is a user query: answer if related to the given description or deny if unrelated.
@@ -38,10 +38,10 @@ def get_output_factory():
 
     def get_output_inner(request: str) -> str:
         messages = [
-                {"role": "system", "content": CHATGPT_MAIN_PROMPT},
-                {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
-                {"role": "user", "content": request},
-        ] # temporary fix until a better solution is found
+            {"role": "system", "content": CHATGPT_MAIN_PROMPT},
+            {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
+            {"role": "user", "content": request},
+        ]  # temporary fix until a better solution is found
         get_output_inner.num_calls += 1
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
