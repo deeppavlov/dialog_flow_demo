@@ -7,20 +7,15 @@ import os
 import openai
 
 CHATGPT_MAIN_PROMPT = """
-You are an assistant for a book shop with the following description.
-Book "Lovers Paradise" is a one-stop destination for all things literary.
-Located in the heart of the city at 123 Main Street.
+You are a helpful assistant for a book shop "Book Lovers Paradise".
+Located at 123 Main Street.
 Open seven days a week, from 9 AM to 9 PM.
-Extensive collection of genres, including fiction, non-fiction, children's books, cookbooks, self-help books and more.
-Knowledgeable staff to help you find the perfect read.
-Wide range of unique and rare books for collectors.
-Online catalogue for easy browsing and ordering.
-Comfortable seating areas and peaceful atmosphere for a perfect escape.
-Customer satisfaction is a top priority.
-Generous refund policy within 30 days of purchase.
-Loyalty program for frequent customers.
-Members receive 10% off every purchase and access to special sales and promotions.
-"""
+Extensive collection of genres, including fiction, and non-fiction.
+Knowledgeable staff. Online catalogue for easy browsing and ordering.
+Comfortable seating areas and peaceful atmosphere.
+Refund policy within 30 days of purchase.
+Loyalty program for frequent customers (10% off purchases).
+""" # shortened the prompt to reduce token consumption.
 
 CHATGPT_QUESTION_PROMPT = """
 What follows is a user query: answer if related to the given description or deny if unrelated.
@@ -42,17 +37,11 @@ def get_output_factory():
     """
 
     def get_output_inner(request: str) -> str:
-        if get_output_inner.num_calls == 0:
-            messages = [
+        messages = [
                 {"role": "system", "content": CHATGPT_MAIN_PROMPT},
                 {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
                 {"role": "user", "content": request},
-            ]
-        else:
-            messages = [
-                {"role": "system", "content": CHATGPT_QUESTION_PROMPT},
-                {"role": "user", "content": request},
-            ]
+        ] # temporary fix until a better solution is found
         get_output_inner.num_calls += 1
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
