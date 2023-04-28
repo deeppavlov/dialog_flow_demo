@@ -24,7 +24,7 @@ CHATGPT_QUESTION_PROMPT = langchain.PromptTemplate(
     + """
 
     What follows is a user query: 
-    answer if related to the given description or deny if unrelated.
+    answer with regard to the given description.
     {question}
     """,
 )
