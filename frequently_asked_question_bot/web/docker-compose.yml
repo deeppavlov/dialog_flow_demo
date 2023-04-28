@@ -6,7 +6,6 @@ services:
       context: web/
     volumes:
       - ./web/:/app:ro
-      - static_volume:/app/static
     ports:
       - 8000:8000
     env_file:
@@ -27,8 +26,7 @@ services:
       - 80:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - static_volume:/app/static
+      - ./web/static:/app/static:ro
 
 volumes:
   postgres_data:
-  static_volume:
