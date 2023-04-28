@@ -4,7 +4,7 @@ Example FAQ bot built on `dff` with a web interface.
 
 This example contains a website with a chat interface using `WebSockets`. Chat history is stored inside a `postgresql` database.
 
-The website is accessible via http://localhost:8000. There is also a `nginx` service which reverse-proxies the website to port 80.
+The website is accessible via http://localhost:80.
 
 The bot itself works in a following manner:
 
