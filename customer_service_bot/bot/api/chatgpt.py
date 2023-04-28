@@ -3,7 +3,7 @@ ChatGPT
 -------
 This module defines functions for OpenAI API interaction.
 """
-from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI
 import langchain
 from langchain.cache import InMemoryCache
 
@@ -42,7 +42,7 @@ CHATGPT_COHERENCE_PROMPT = langchain.PromptTemplate(
 )
 
 langchain.llm_cache = InMemoryCache()
-llm = ChatOpenAI(model_name="gpt-3.5-turbo")
+llm = OpenAI(model_name="gpt-3.5-turbo", cache=True)
 
 
 def get_output_factory():
