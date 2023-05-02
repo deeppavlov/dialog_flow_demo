@@ -5,13 +5,14 @@ This module defines different responses the bot gives.
 """
 from typing import cast
 
-from dff.script import Context, Actor
+from dff.script import Context
+from dff.pipeline import Pipeline
 from dff.script.core.message import Button
 from dff.messengers.telegram import TelegramMessage, TelegramUI, ParseMode
 from faq_model.model import faq
 
 
-def suggest_similar_questions(ctx: Context, _: Actor):
+def suggest_similar_questions(ctx: Context, _: Pipeline):
     """Suggest questions similar to user's query by showing buttons with those questions."""
     if ctx.validation:  # this function requires non-empty fields and cannot be used during script validation
         return TelegramMessage()
@@ -36,7 +37,7 @@ def suggest_similar_questions(ctx: Context, _: Actor):
         )
 
 
-def answer_question(ctx: Context, _: Actor):
+def answer_question(ctx: Context, _: Pipeline):
     """Answer a question asked by a user by pressing a button."""
     if ctx.validation:  # this function requires non-empty fields and cannot be used during script validation
         return TelegramMessage()
