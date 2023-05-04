@@ -1,6 +1,6 @@
 """
-Main
------
+Script
+--------
 This module defines the bot script.
 """
 from dff.script import RESPONSE, TRANSITIONS, LOCAL, PRE_TRANSITIONS_PROCESSING, PRE_RESPONSE_PROCESSING
