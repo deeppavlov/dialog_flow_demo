@@ -2,8 +2,6 @@ version: "2"
 services:
     assistant:
       env_file: [ .env ]
-      depends_on:
-        - dnnc
       build:
         args:
           SERVICE_NAME: assistant
@@ -11,15 +9,16 @@ services:
         context: bot/
       volumes:
         - ./bot/:/app:ro
+      ports:
+        - 5000:5000
 
-    dnnc:
+    intent_catcher:
       env_file: [ .env ]
       build:
         args:
-          ROBERTA_NLI: https://storage.googleapis.com/sfr-dnnc-few-shot-intent/roberta_nli.zip
-          DNNC_URL: https://github.com/ruthenian8/DNNC-few-shot-intent.git
-          CLINC_URL: https://raw.githubusercontent.com/clinc/oos-eval/master/data/data_full.json
           SERVICE_PORT: 4999
-          TRAIN_FILE_PATH: ./data/clinc150/all/train/
-          DEV_FILE_PATH: ./data/clinc150/all/dev/
-        context: ./dnnc/
+          IC_WEIGHTS: https://huggingface.co/ruthenian8/deeppavlov-intent-catcher-transformers/resolve/main/model.pth.tar
+          IC_CLASSES: https://huggingface.co/ruthenian8/deeppavlov-intent-catcher-transformers/raw/main/classes.dict
+        context: ./intent_catcher/
+      ports:
+        - 4999:4999
