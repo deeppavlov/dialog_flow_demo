@@ -25,7 +25,7 @@ CLASSES_PATH = "classes.dict"
 
 with open(CLASSES_PATH, "r") as file:
     reader = csv.reader(file, delimiter="\t")
-    label2id = {line[0]: int(line[1]) for line in reader}
+    label2id = {line[0]: line[1] for line in reader}
 
 id2label = {value: key for key, value in label2id.items()}
 
@@ -71,7 +71,8 @@ def respond():
 
     try:
         results = pipe(contexts)
-        responses = [result['label'] for result in results]
+        indices = [int(''.join(filter(lambda x: x.isdigit(), result['label']))) for result in results]
+        responses = [list(label2id.keys())[idx] for idx in indices]
         confidences = [result['score'] for result in results]
     except Exception as exc:
         logger.exception(exc)
