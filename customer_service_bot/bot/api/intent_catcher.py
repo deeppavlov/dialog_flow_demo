@@ -1,25 +1,25 @@
 """
-DNNC
+Intent Catcher
 ----
-This module includes queries to a local DNNC service.
+This module includes queries to a local intent catcher service.
 """
 import requests
 from dff.script import Message
 
 
-DNNC_SERVICE = "http://localhost:4999/respond"
+INTENT_CATCHER_SERVICE = "http://localhost:4999/respond"
 
 
 def get_intents(request: Message):
     """
-    Query the local DNNC service extracting intents from the
+    Query the local intent catcher service extracting intents from the
     last user utterance.
     """
     if not request.text:
         return []
     request_body = {"dialog_contexts": [request.text]}
     try:
-        response = requests.post(DNNC_SERVICE, json=request_body)
+        response = requests.post(INTENT_CATCHER_SERVICE, json=request_body)
     except requests.RequestException:
         response = None
     if response and response.status_code == 200:

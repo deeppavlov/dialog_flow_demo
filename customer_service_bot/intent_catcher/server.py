@@ -81,5 +81,5 @@ def respond():
         confidences = [ZERO_CONFIDENCE] * len(contexts)
 
     total_time = time.time() - st_time
-    logger.info(f"Dnnc exec time: {total_time:.3f}s")
+    logger.info(f"Intent catcher exec time: {total_time:.3f}s")
     return jsonify(list(zip(responses, confidences)))

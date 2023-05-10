@@ -20,7 +20,7 @@ def has_intent(labels: list) -> Callable:
         if ctx.validation:
             return False
 
-        return any([label in ctx.misc.get(consts.DNNC_INTENTS, []) for label in labels])
+        return any([label in ctx.misc.get(consts.INTENTS, []) for label in labels])
 
     return has_intent_inner
 
