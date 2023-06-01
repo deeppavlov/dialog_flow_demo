@@ -10,7 +10,10 @@ This bot is designed to answer any type of user questions in a limited business 
 
 ### Intent Catcher
 
-Intent catcher model is available at port 4999. 
+Intent catcher is a DistilBERT-based classifier for user intent classes.
+We use DeepPavlov library for seamless training and inference.
+Sample code for training the model can be found in `Training_intent_catcher.ipynb`.
+The model is deployed as a separate microservice running at port 4999.
 
 Service bot interacts with the container via `/respond` endpoint.
 The API expects a json object with the dialog history passed as an array and labeled 'dialog_contexts'. Intents will be extracted from the last utterance.
