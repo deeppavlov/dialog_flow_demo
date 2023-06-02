@@ -2,16 +2,14 @@ import logging
 import time
 import os
 import random
-from argparse import Namespace
+import csv
 
 import torch
 import sentry_sdk
 from flask import Flask, request, jsonify
 from sentry_sdk.integrations.flask import FlaskIntegration
+from transformers import DistilBertConfig, AutoModelForSequenceClassification, AutoTokenizer, pipeline
 
-from models.utils import load_intent_datasets, sample
-from models.dnnc import DNNC
-from intent_predictor import DnncIntentPredictor
 
 sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"), integrations=[FlaskIntegration()])
 
@@ -22,22 +20,25 @@ random.seed(42)
 
 DEFAULT_CONFIDENCE = 0.9
 ZERO_CONFIDENCE = 0.0
-MAX_SEQ_LENGTH = 128
-TRAIN_FILE_PATH = os.getenv("TRAIN_FILE_PATH")
-DEV_FILE_PATH = os.getenv("DEV_FILE_PATH")
-MODEL_PATH = "roberta_nli"
+MODEL_PATH = "model.pth.tar"
+CLASSES_PATH = "classes.dict"
+
+with open(CLASSES_PATH, "r") as file:
+    reader = csv.reader(file, delimiter="\t")
+    label2id = {line[0]: line[1] for line in reader}
+
+id2label = {value: key for key, value in label2id.items()}
 
 try:
-    train_examples, _ = load_intent_datasets(TRAIN_FILE_PATH, DEV_FILE_PATH, True)
-    sampled_tasks = [sample(5, train_examples)]
     if torch.cuda.is_available():
         no_cuda = False
     else:
         no_cuda = True
-    dnnc = DNNC(
-        MODEL_PATH, Namespace(**{"no_cuda": no_cuda, "bert_model": "roberta-base", "max_seq_length": MAX_SEQ_LENGTH})
-    )
-    intent_predictor = DnncIntentPredictor(dnnc, sampled_tasks[0])
+    model = AutoModelForSequenceClassification.from_config(DistilBertConfig(num_labels=23))
+    state = torch.load(MODEL_PATH, map_location = "cpu" if no_cuda else "gpu")
+    model.load_state_dict(state["model_state_dict"])
+    tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
+    pipe = pipeline('text-classification', model=model, tokenizer=tokenizer)
     logger.info("predictor is ready")
 except Exception as e:
     sentry_sdk.capture_exception(e)
@@ -69,14 +70,10 @@ def respond():
     contexts = request.json.get("dialog_contexts", [])
 
     try:
-        responses = []
-        confidences = []
-        for context in contexts:
-            response, score, _ = intent_predictor.predict_intent(context[-1])
-            if len(response) > 3:
-                # drop too short responses
-                responses += [response]
-                confidences += [score]
+        results = pipe(contexts)
+        indices = [int(''.join(filter(lambda x: x.isdigit(), result['label']))) for result in results]
+        responses = [list(label2id.keys())[idx] for idx in indices]
+        confidences = [result['score'] for result in results]
     except Exception as exc:
         logger.exception(exc)
         sentry_sdk.capture_exception(exc)
@@ -84,5 +81,5 @@ def respond():
         confidences = [ZERO_CONFIDENCE] * len(contexts)
 
     total_time = time.time() - st_time
-    logger.info(f"Dnnc exec time: {total_time:.3f}s")
+    logger.info(f"Intent catcher exec time: {total_time:.3f}s")
     return jsonify(list(zip(responses, confidences)))

@@ -5,12 +5,15 @@
 Customer service bot built on `DFF`. Uses telegram as an interface.
 This bot is designed to answer any type of user questions in a limited business domain (book shop).
 
-* [DNNC](https://github.com/salesforce/DNNC-few-shot-intent) model ([Zhang et al. 2020](https://arxiv.org/abs/2010.13009)) force is used for intent retrieval.
+* [DeepPavlov Intent Catcher](#) force is used for intent retrieval.
 * [ChatGPT](https://openai.com/pricing#language-models) is used for context based question answering.
 
-### DNNC
+### Intent Catcher
 
-DNNC model is available at port 4999. 
+Intent catcher is a DistilBERT-based classifier for user intent classes.
+We use DeepPavlov library for seamless training and inference.
+Sample code for training the model can be found in `Training_intent_catcher.ipynb`.
+The model is deployed as a separate microservice running at port 4999.
 
 Service bot interacts with the container via `/respond` endpoint.
 The API expects a json object with the dialog history passed as an array and labeled 'dialog_contexts'. Intents will be extracted from the last utterance.
@@ -24,7 +27,7 @@ The API expects a json object with the dialog history passed as an array and lab
 The API responds with a nested array containing `label - score` pairs.
 
 ```json
-[["definition",0.3393537402153015]]
+[["no",0.3393537402153015]]
 ```
 
 ## Run the bot

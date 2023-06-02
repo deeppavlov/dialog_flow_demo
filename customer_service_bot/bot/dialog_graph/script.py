@@ -18,7 +18,7 @@ script = {
         LOCAL: {
             TRANSITIONS: {
                 ("form_flow", "ask_item", 1.0): cnd.any(
-                    [loc_cnd.has_intent(["shopping_list", "transfer"]), cnd.regexp(r"\border\b|\bpurchase\b")]
+                    [loc_cnd.has_intent(["purchase"]), cnd.regexp(r"\border\b|\bpurchase\b")]
                 ),
                 ("chitchat_flow", "init_chitchat", 0.8): cnd.true(),
             },
@@ -35,7 +35,7 @@ script = {
         LOCAL: {
             TRANSITIONS: {
                 ("form_flow", "ask_item", 1.0): cnd.any(
-                    [loc_cnd.has_intent(["shopping_list", "transfer"]), cnd.regexp(r"\border\b|\bpurchase\b")]
+                    [loc_cnd.has_intent(["purchase"]), cnd.regexp(r"\border\b|\bpurchase\b")]
                 ),
             },
             PRE_TRANSITIONS_PROCESSING: {"1": loc_prc.clear_intents(), "2": loc_prc.extract_intents()},
@@ -55,7 +55,7 @@ script = {
         LOCAL: {
             TRANSITIONS: {
                 ("chitchat_flow", "init_chitchat", 1.2): cnd.any(
-                    [cnd.regexp(r"\bcancel\b|\babort\b"), loc_cnd.has_intent(["cancel", "no"])]
+                    [cnd.regexp(r"\bcancel\b|\babort\b"), loc_cnd.has_intent(["no"])]
                 ),
             }
         },

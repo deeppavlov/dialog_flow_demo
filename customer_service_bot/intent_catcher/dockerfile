@@ -16,31 +16,14 @@ RUN apt-get update && \
 
 ARG SERVICE_PORT
 ENV SERVICE_PORT ${SERVICE_PORT}
-ARG DNNC_URL
-ENV DNNC_URL ${DNNC_URL}
-ARG ROBERTA_NLI
-ENV ROBERTA_NLI ${ROBERTA_NLI}
-ARG CLINC_URL
-ENV CLINC_URL ${CLINC_URL}
-ARG TRAIN_FILE_PATH
-ENV TRAIN_FILE_PATH ${TRAIN_FILE_PATH}
-ARG DEV_FILE_PATH
-ENV DEV_FILE_PATH ${DEV_FILE_PATH}
+ARG IC_WEIGHTS
+ARG IC_CLASSES
 
 WORKDIR /src
-RUN git clone ${DNNC_URL} .
+COPY ./requirements.txt /src/requirements.txt
 RUN pip install -r /src/requirements.txt
-COPY ./requirements.txt /src/service_requirements.txt
-RUN pip install -r /src/service_requirements.txt
-RUN pip install tensorboard
-
-RUN wget ${ROBERTA_NLI}
-RUN unzip roberta_nli.zip && rm roberta_nli.zip
-
-WORKDIR /src/data/clinc150
-RUN mkdir original_data
-RUN wget ${CLINC_URL} -P original_data/
-RUN python3 ./preprocess.py
+RUN wget ${IC_WEIGHTS}
+RUN wget ${IC_CLASSES}
 
 FROM base as prod
 WORKDIR /src
